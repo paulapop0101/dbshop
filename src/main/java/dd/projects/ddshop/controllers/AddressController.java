@@ -27,15 +27,14 @@ public class AddressController {
     }
 
     @PutMapping("/updateAddress")
-    public ResponseEntity<Object> updateAddress(@RequestBody Address address) throws Exception {
+    public ResponseEntity<Object> updateAddress(@RequestBody Address address)  {
         addressService.addressExists(address.getId());
         addressService.updateAddress(address);
         return new ResponseEntity<>("Address with id: was updated.", HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteAddress/{id}")
-    public ResponseEntity<Object> deleteStudent(@PathVariable int id) throws Exception {
-        addressService.addressExists(id);
+    public ResponseEntity<Object> deleteStudent(@PathVariable int id)  {
         addressService.deleteAddress(id);
         return new ResponseEntity<>("Student with id: " + id + " was deleted.", HttpStatus.OK);
     }

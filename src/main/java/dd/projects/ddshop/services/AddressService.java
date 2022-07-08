@@ -1,16 +1,16 @@
 package dd.projects.ddshop.services;
 
+import dd.projects.ddshop.exceptions.EntityDoesNotExist;
 import dd.projects.ddshop.models.Address;
 import dd.projects.ddshop.repositories.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
 @Service
 public class AddressService {
+
     @Autowired
     AddressRepository addressRepository;
     public void addAddress(Address address){ addressRepository.save(address);}
@@ -24,9 +24,7 @@ public class AddressService {
         addressRepository.deleteById(id);
     }
 
-    public void addressExists(int id) throws Exception {
-        if(!addressRepository.existsById(id)){
-            throw new Exception("Exception: Student was not found!");
-        }
+    public boolean addressExists(int id) {
+       return addressRepository.existsById(id);
     }
 }

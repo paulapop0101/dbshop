@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String firstname;
@@ -26,11 +27,11 @@ public class User {
 
     private String password;
 
-    @OneToOne
-    @JoinColumn(name="default_delivery_address", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="default_delivery_address", referencedColumnName = "id" )
     private Address default_delivery_address;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="default_billing_address", referencedColumnName = "id")
     private Address default_billing_address;
 

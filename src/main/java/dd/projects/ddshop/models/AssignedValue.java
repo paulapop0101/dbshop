@@ -15,6 +15,7 @@ import java.util.List;
 public class AssignedValue {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToOne

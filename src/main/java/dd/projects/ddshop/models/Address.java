@@ -3,6 +3,7 @@ package dd.projects.ddshop.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import javax.persistence.*;
 public class Address {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String streetLine;

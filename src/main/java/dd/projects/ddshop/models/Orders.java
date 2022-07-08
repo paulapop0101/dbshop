@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 public class Orders {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToOne

@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class Cart_entry {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private int quantity;
