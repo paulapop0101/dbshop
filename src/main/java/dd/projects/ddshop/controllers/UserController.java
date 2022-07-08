@@ -1,6 +1,5 @@
 package dd.projects.ddshop.controllers;
 
-import dd.projects.ddshop.models.Address;
 import dd.projects.ddshop.models.User;
 import dd.projects.ddshop.services.AddressService;
 import dd.projects.ddshop.services.UserService;

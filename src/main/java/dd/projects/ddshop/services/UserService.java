@@ -22,7 +22,6 @@ public class UserService {
         if(!addressService.addressExists(user.getDefault_billing_address().getId()))
             addressService.addAddress(user.getDefault_billing_address());
         userRepository.save(user);
-
     }
 
     public List<User> getAllUsers() {
