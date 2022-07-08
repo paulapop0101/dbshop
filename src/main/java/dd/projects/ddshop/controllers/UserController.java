@@ -1,5 +1,6 @@
 package dd.projects.ddshop.controllers;
 
+import dd.projects.ddshop.dtos.UserDTO;
 import dd.projects.ddshop.models.User;
 import dd.projects.ddshop.services.AddressService;
 import dd.projects.ddshop.services.UserService;
@@ -20,7 +21,7 @@ public class UserController {
     AddressService addressService;
 
     @GetMapping("/getUsers")
-    public ResponseEntity<List<User>> getUsers(){
+    public ResponseEntity<List<UserDTO>> getUsers(){
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
     }
     @PutMapping("/updateUser")

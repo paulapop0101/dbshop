@@ -1,6 +1,8 @@
 package dd.projects.ddshop.services;
 
+import dd.projects.ddshop.dtos.UserDTO;
 import dd.projects.ddshop.exceptions.EntityDoesNotExist;
+import dd.projects.ddshop.mappers.UserMapper;
 import dd.projects.ddshop.models.Address;
 import dd.projects.ddshop.models.User;
 import dd.projects.ddshop.repositories.AddressRepository;
@@ -9,6 +11,7 @@ import dd.projects.ddshop.repositories.userRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class UserService {
@@ -16,6 +19,8 @@ public class UserService {
     userRepository userRepository;
     @Autowired
     AddressService addressService;
+
+    UserMapper userMapper = new UserMapper();
     public void addUser(User user){
         if(!addressService.addressExists(user.getDefault_delivery_address().getId()))
             addressService.addAddress(user.getDefault_delivery_address());
@@ -24,8 +29,12 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public List<User> getAllUsers() {
-        return  userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        List<UserDTO> userDTOList = new ArrayList<>();
+        for (User u : userRepository.findAll()) {
+            userDTOList.add(userMapper.toDTO(u));
+        }
+        return  userDTOList;
     }
     public void updateUser(User user){
         userRepository.save(user);
