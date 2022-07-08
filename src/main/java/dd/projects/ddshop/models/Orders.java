@@ -28,7 +28,8 @@ public class Orders {
 
     private float total_price;
 
-    private int payment_type;
+    @Enumerated(EnumType.ORDINAL)
+    private PaymentType payment_type;
 
     private Timestamp order_date;
 
