@@ -1,5 +1,6 @@
 package dd.projects.ddshop.controllers;
 
+import dd.projects.ddshop.dtos.UserCreationDTO;
 import dd.projects.ddshop.dtos.UserDTO;
 import dd.projects.ddshop.models.User;
 import dd.projects.ddshop.services.AddressService;
@@ -31,9 +32,9 @@ public class UserController {
         return new ResponseEntity<>("User with id: "+user.getId()+"was updated.", HttpStatus.OK);
     }
     @PostMapping("/addUser")
-    public ResponseEntity<Object> addAddress(@RequestBody User user) {
+    public ResponseEntity<Object> addAddress(@RequestBody UserCreationDTO user) {
         userService.addUser(user);
-        return new ResponseEntity<>("User with id: "+ user.getId()+"was created.", HttpStatus.OK);
+        return new ResponseEntity<>("New user was created.", HttpStatus.OK);
     }
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable int id)  {

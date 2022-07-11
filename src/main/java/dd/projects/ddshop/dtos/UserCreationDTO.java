@@ -20,5 +20,7 @@ public class UserCreationDTO {
 
     private String password;
 
-    private Address billingAddress;
+    private AddressDTO billing_address;
+
+    private AddressDTO delivery_address;
 }

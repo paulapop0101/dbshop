@@ -30,4 +30,11 @@ public class Address {
 
     private String country;
 
+    public Address(String streetLine, int postalCode, String city, String county, String country) {
+        this.streetLine = streetLine;
+        this.city=city;
+        this.country=country;
+        this.county=county;
+        this.postalCode=postalCode;
+    }
 }
