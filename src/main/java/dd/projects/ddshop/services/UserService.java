@@ -52,9 +52,6 @@ public class UserService {
     public void updateUser(User user){
         userRepository.save(user);
     }
-public User getUserByID(int id){
-        return userRepository.getReferenceById(id);
-}
     public void deleteUser(int id) {
         userExists(id);
         userRepository.deleteById(id);

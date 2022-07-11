@@ -25,4 +25,8 @@ public class AttributeValue {
     ProductAttribute product_attributes;
 
 
+    public AttributeValue(String value, ProductAttribute attribute) {
+        this.value=value;
+        this.product_attributes = attribute;
+    }
 }

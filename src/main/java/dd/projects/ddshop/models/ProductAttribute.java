@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,6 +24,12 @@ public class ProductAttribute {
     @ManyToMany(mappedBy = "product_attributes")
     private List<Product> product;
 
-    @OneToMany(mappedBy = "product_attributes")
+    @OneToMany(mappedBy = "product_attributes",cascade = CascadeType.ALL)
     private List<AttributeValue> attributeValues;
+
+    public ProductAttribute(String name) {
+        this.name = name;
+        this.product = new ArrayList<Product>();
+        this.attributeValues = new ArrayList<AttributeValue>();
+    }
 }
