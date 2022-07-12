@@ -1,5 +1,6 @@
 package dd.projects.ddshop.controllers;
 
+import dd.projects.ddshop.dtos.AddressDTO;
 import dd.projects.ddshop.models.Address;
 import dd.projects.ddshop.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,10 @@ import java.util.List;
 @RestController
 public class AddressController {
 
-    @Autowired
-    AddressService addressService;
-
+    private final AddressService addressService;
+    public AddressController(AddressService addressService){
+        this.addressService = addressService;
+    }
     @GetMapping("/getAllAddresses")
     public ResponseEntity<List<Address>> getAllAddresses() {
         return new ResponseEntity<>(addressService.getAllAddresses(), HttpStatus.OK);
@@ -26,17 +28,16 @@ public class AddressController {
         return new ResponseEntity<>("Address with id: was created.", HttpStatus.OK);
     }
 
-    @PutMapping("/updateAddress")
-    public ResponseEntity<Object> updateAddress(@RequestBody Address address)  {
-        addressService.addressExists(address.getId());
-        addressService.updateAddress(address);
-        return new ResponseEntity<>("Address with id: was updated.", HttpStatus.OK);
+    @PutMapping("/updateAddress/{id}")
+    public ResponseEntity<Object> updateAddress(@RequestBody AddressDTO address, @PathVariable int id){
+        addressService.updateAddress(address,id);
+        return new ResponseEntity<>("Address with id:"+id+" was updated.", HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteAddress/{id}")
     public ResponseEntity<Object> deleteStudent(@PathVariable int id)  {
         addressService.deleteAddress(id);
-        return new ResponseEntity<>("Student with id: " + id + " was deleted.", HttpStatus.OK);
+        return new ResponseEntity<>("Address with id: " + id + " was deleted.", HttpStatus.OK);
     }
 
 

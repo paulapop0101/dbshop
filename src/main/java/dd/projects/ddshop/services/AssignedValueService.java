@@ -2,8 +2,7 @@ package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.exceptions.EntityDoesNotExist;
 import dd.projects.ddshop.models.AssignedValue;
-import dd.projects.ddshop.models.Variant;
-import dd.projects.ddshop.repositories.assignedValueRepository;
+import dd.projects.ddshop.repositories.AssignedValueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,7 @@ import java.util.List;
 public class AssignedValueService {
 
     @Autowired
-    assignedValueRepository assignedValueRepo;
+    AssignedValueRepository assignedValueRepo;
 
     public void addVariant(AssignedValue assignedValue){
         assignedValueRepo.save(assignedValue);

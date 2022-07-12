@@ -20,4 +20,7 @@ public class AttributeMapper {
             values.add(v.getValue());
         return new AttributeDTO(productAttribute.getName(),values);
     }
+    public AttributeValue toAttValue(String s, ProductAttribute productAttribute){
+        return  new AttributeValue(s,productAttribute);
+    }
 }

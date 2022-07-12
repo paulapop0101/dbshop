@@ -1,9 +1,8 @@
 package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.exceptions.EntityDoesNotExist;
-import dd.projects.ddshop.models.User;
 import dd.projects.ddshop.models.Variant;
-import dd.projects.ddshop.repositories.variantRepository;
+import dd.projects.ddshop.repositories.VariantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,7 @@ import java.util.List;
 public class VariantService {
 
     @Autowired
-    variantRepository variantRepo;
+    VariantRepository variantRepo;
 
     public void addVariant(Variant variant){
         variantRepo.save(variant);

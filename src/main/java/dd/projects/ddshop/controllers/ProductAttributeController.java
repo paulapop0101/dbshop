@@ -1,11 +1,7 @@
 package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.AttributeDTO;
-import dd.projects.ddshop.models.Address;
-import dd.projects.ddshop.models.ProductAttribute;
-import dd.projects.ddshop.repositories.productAttributeRepository;
 import dd.projects.ddshop.services.AttributeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,8 +12,11 @@ import java.util.List;
 @Controller
 public class ProductAttributeController {
 
-    @Autowired
-    private AttributeService attributeService;
+    private final AttributeService attributeService;
+
+    public ProductAttributeController(AttributeService attributeService){
+        this.attributeService = attributeService;
+    }
 
     @PostMapping("/addAttribute")
     public ResponseEntity<Object> addAttribute(@RequestBody AttributeDTO attributeDTO) {

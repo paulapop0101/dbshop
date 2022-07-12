@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
     public UserDTO toDTO(User user){
-        return new UserDTO(user.getFirstname(),user.getLastname(),user.getEmail(),user.getPhone());
+        return new UserDTO(user.getFirstname(),user.getLastname(),user.getPhone());
     }
     public User toUser(UserCreationDTO userCreationDTO, Address billing_a, Address delivery_a){
 

@@ -5,10 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserDTO {
-    private String firstname;
-
-    private String lastname;
-
-    private String phone;
+public class CategoryDTO {
+    String name;
+    String description;
 }

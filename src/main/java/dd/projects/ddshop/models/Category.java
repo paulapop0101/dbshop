@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -28,4 +29,10 @@ public class Category {
             inverseJoinColumns = @JoinColumn(name = "category_id",
                     referencedColumnName = "id"))
     List<Product> products;
+
+    public Category(String name, String description) {
+        this.name = name;
+        this.description=description;
+        this.products = new ArrayList<>();
+    }
 }

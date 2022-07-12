@@ -15,24 +15,22 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    AddressService addressService;
+   private final UserService userService;
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
 
     @GetMapping("/getUsers")
     public ResponseEntity<List<UserDTO>> getUsers(){
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
     }
-    @PutMapping("/updateUser")
-    public ResponseEntity<Object> updateUser(@RequestBody User user) {
-        userService.userExists(user.getId());
-        userService.updateUser(user);
-        return new ResponseEntity<>("User with id: "+user.getId()+"was updated.", HttpStatus.OK);
+    @PutMapping("/updateUser/{id}")
+    public ResponseEntity<Object> updateUser(@RequestBody UserDTO userDTO, @PathVariable int id) {
+        userService.updateUser(userDTO,id);
+        return new ResponseEntity<>("User with id: "+id+"was updated.", HttpStatus.OK);
     }
     @PostMapping("/addUser")
-    public ResponseEntity<Object> addAddress(@RequestBody UserCreationDTO user) {
+    public ResponseEntity<Object> addUser(@RequestBody UserCreationDTO user) {
         userService.addUser(user);
         return new ResponseEntity<>("New user was created.", HttpStatus.OK);
     }
