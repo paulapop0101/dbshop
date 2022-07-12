@@ -23,6 +23,11 @@ public class ProductAttributeController {
         attributeService.addAttribute(attributeDTO);
         return new ResponseEntity<>("New attribute was created.", HttpStatus.OK);
     }
+    @PostMapping("/addAttributeValue/{id}")
+    public ResponseEntity<String> addAttributeValue(@RequestBody String value, @PathVariable int id) {
+        attributeService.addAttributeValue(id,value);
+        return new ResponseEntity<>("New attribute was created.", HttpStatus.OK);
+    }
     @DeleteMapping("/deleteAttributeValue/{id}")
     public ResponseEntity<Object> deleteAttributeValue(@PathVariable int id){
         attributeService.deleteAttributeValue(id);

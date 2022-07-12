@@ -29,7 +29,7 @@ public class ProductAttribute {
 
     public ProductAttribute(String name) {
         this.name = name;
-        this.product = new ArrayList<Product>();
-        this.attributeValues = new ArrayList<AttributeValue>();
+        this.product = new ArrayList<>();
+        this.attributeValues = new ArrayList<>();
     }
 }

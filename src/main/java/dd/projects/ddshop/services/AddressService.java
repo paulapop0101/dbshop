@@ -4,7 +4,6 @@ import dd.projects.ddshop.dtos.AddressDTO;
 import dd.projects.ddshop.exceptions.EntityDoesNotExist;
 import dd.projects.ddshop.models.Address;
 import dd.projects.ddshop.repositories.AddressRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

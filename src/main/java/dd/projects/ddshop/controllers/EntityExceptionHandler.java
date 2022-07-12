@@ -1,5 +1,6 @@
 package dd.projects.ddshop.controllers;
 
+import dd.projects.ddshop.exceptions.EntityAlreadyExists;
 import dd.projects.ddshop.exceptions.EntityDoesNotExist;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,5 +17,10 @@ public class EntityExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> entityDoesNotExist(RuntimeException runtimeException, WebRequest webRequest){
         String bodyOfResponse = runtimeException.getMessage();
         return handleExceptionInternal(runtimeException, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, webRequest);
+    }
+    @ExceptionHandler(value = {EntityAlreadyExists.class})
+    protected ResponseEntity<Object> entityAlreadyExists(RuntimeException runtimeException, WebRequest webRequest){
+        String bodyOfResponse = runtimeException.getMessage();
+        return handleExceptionInternal(runtimeException, bodyOfResponse, new HttpHeaders(), HttpStatus.ALREADY_REPORTED, webRequest);
     }
 }

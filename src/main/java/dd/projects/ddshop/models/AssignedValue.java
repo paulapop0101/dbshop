@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -28,4 +29,10 @@ public class AssignedValue {
 
     @ManyToMany(mappedBy = "assignedValues")
     private List<Variant> variants;
+
+    public AssignedValue(ProductAttribute attribute, AttributeValue attributeValue) {
+        this.productAttribute = attribute;
+        this.attributeValue = attributeValue;
+        this.variants = new ArrayList<>();
+    }
 }
