@@ -3,11 +3,10 @@ package dd.projects.ddshop.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.type.descriptor.sql.LongVarcharTypeDescriptor;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
 @Data
@@ -25,22 +24,18 @@ public class Product {
 
     private String description;
 
-    private float price;
+    @OneToOne
+    @JoinColumn(name="subcategory_id", referencedColumnName = "id")
+    private Subcategory subcategory;
 
-    private int available_quantity;
-
-    private Timestamp added_date;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "product_product_attribute",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_attribute_id",
-                    referencedColumnName = "id"))
-    private List<ProductAttribute> product_attributes;
-
-    @ManyToMany(mappedBy = "products")
-    List<Category> categories;
-
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
     private List<Variant> variants;
+
+    public Product(String name, String description, Subcategory subcategory) {
+        this.name=name;
+        this.description=description;
+        this.subcategory = subcategory;
+        // DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        // LocalDateTime now = LocalDateTime.now();
+    }
 }

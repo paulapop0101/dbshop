@@ -21,18 +21,12 @@ public class Category {
 
     private String name;
 
-    private String description;
 
-    @ManyToMany
-    @JoinTable(name = "product_category",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id",
-                    referencedColumnName = "id"))
-    List<Product> products;
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    private List<Subcategory> subcategories;
 
-    public Category(String name, String description) {
+    public Category(String name) {
         this.name = name;
-        this.description=description;
-        this.products = new ArrayList<>();
+        this.subcategories = new ArrayList<>();
     }
 }

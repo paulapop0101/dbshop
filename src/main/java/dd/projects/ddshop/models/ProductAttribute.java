@@ -21,15 +21,15 @@ public class ProductAttribute {
 
     private String name;
 
-    @ManyToMany(mappedBy = "product_attributes")
-    private List<Product> product;
+    @ManyToMany(mappedBy = "productAttributes")
+    private List<Subcategory> subcategories;
 
     @OneToMany(mappedBy = "product_attributes",cascade = CascadeType.ALL)
     private List<AttributeValue> attributeValues;
 
     public ProductAttribute(String name) {
         this.name = name;
-        this.product = new ArrayList<>();
+        this.subcategories=new ArrayList<>();
         this.attributeValues = new ArrayList<>();
     }
 }

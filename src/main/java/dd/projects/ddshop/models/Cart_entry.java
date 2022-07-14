@@ -23,7 +23,7 @@ public class Cart_entry {
 
     private float total_price_per_entity;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="cart_id", referencedColumnName = "id")
     private Cart cart_id;
 

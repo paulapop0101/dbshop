@@ -5,9 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -39,6 +40,8 @@ public class User {
     @JoinColumn(name="default_billing_address", referencedColumnName = "id")
     private Address default_billing_address;
 
+    @OneToMany(mappedBy = "user_id",cascade = CascadeType.ALL)
+    private List<Orders> orders;
 
     public User(String firstname, String lastname, String email, String password, String phone, Address billingAddress, Address deliveryAddress) {
         this.firstname = firstname;
@@ -48,6 +51,7 @@ public class User {
         this.default_billing_address = billingAddress;
         this.default_delivery_address = deliveryAddress;
         this.phone = phone;
+        this.orders = new ArrayList<>();
     }
 
     public static String getMd5(String input)
@@ -61,15 +65,15 @@ public class User {
             //  of an input digest() return array of byte
             byte[] messageDigest = md.digest(input.getBytes());
 
-            // Convert byte array into signum representation
+            // Convert byte array into Sig_num representation
             BigInteger no = new BigInteger(1, messageDigest);
 
             // Convert message digest into hex value
-            String hashtext = no.toString(16);
-            while (hashtext.length() < 32) {
-                hashtext = "0" + hashtext;
+            StringBuilder hash_text = new StringBuilder(no.toString(16));
+            while (hash_text.length() < 32) {
+                hash_text.insert(0, "0");
             }
-            return hashtext;
+            return hash_text.toString();
         }
 
         // For specifying wrong message digest algorithms
@@ -77,24 +81,5 @@ public class User {
             throw new RuntimeException(e);
         }
     }
-    public static String encodePassword(String salt, String password) {
-        MessageDigest md = getMessageDigest();
-        md.update(salt.getBytes(StandardCharsets.UTF_8));
 
-        byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
-
-        // This is the way a password should be encoded when checking the credentials
-        return new String(hashedPassword, StandardCharsets.UTF_8)
-                .replace("\"", ""); //to be able to save in JSON format
-    }
-
-    public static MessageDigest getMessageDigest() {
-        MessageDigest md;
-        try {
-            md = MessageDigest.getInstance("SHA-512");
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("SHA-512 does not exist!");
-        }
-        return md;
-    }
 }

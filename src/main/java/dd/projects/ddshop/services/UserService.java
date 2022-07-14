@@ -29,10 +29,15 @@ public class UserService {
 
     AddressMapper addressMapper = new AddressMapper();
     public void addUser(UserCreationDTO user){
+        validateUser(user);
         Address billing_a = addressMapper.toAddress(user.getBilling_address());
         Address delivery_a = addressMapper.toAddress(user.getDelivery_address());
         User u= userMapper.toUser(user,billing_a,delivery_a);
         userRepository.save(u);
+    }
+
+    private void validateUser(UserCreationDTO user) {
+        
     }
 
     public List<UserDTO> getAllUsers() {

@@ -1,15 +1,16 @@
 package dd.projects.ddshop.services;
 
-import dd.projects.ddshop.dtos.AttributeDTO;
+import dd.projects.ddshop.dtos.AttributeCreateDTO;
 import dd.projects.ddshop.exceptions.EntityAlreadyExists;
-import dd.projects.ddshop.exceptions.EntityDoesNotExist;
 import dd.projects.ddshop.mappers.AttributeMapper;
 import dd.projects.ddshop.models.AssignedValue;
 import dd.projects.ddshop.models.AttributeValue;
 import dd.projects.ddshop.models.ProductAttribute;
+import dd.projects.ddshop.models.Subcategory;
 import dd.projects.ddshop.repositories.AssignedValueRepository;
 import dd.projects.ddshop.repositories.AttributeValueRepository;
 import dd.projects.ddshop.repositories.ProductAttributeRepository;
+import dd.projects.ddshop.repositories.SubcategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,33 +28,40 @@ public class AttributeService {
 
     private final AssignedValueRepository assignedValueRepository;
 
-    public AttributeService(ProductAttributeRepository productAttributeRepository, AttributeValueRepository attributeValueRepository, AssignedValueRepository assignedValueRepository){
+    private final SubcategoryRepository subcategoryRepository;
+
+    public AttributeService(ProductAttributeRepository productAttributeRepository, AttributeValueRepository attributeValueRepository, AssignedValueRepository assignedValueRepository, SubcategoryRepository subcategoryRepository){
         this.productAttributeRepository=productAttributeRepository;
         this.attributeValueRepository=attributeValueRepository;
         this.assignedValueRepository = assignedValueRepository;
+        this.subcategoryRepository = subcategoryRepository;
     }
 
     private final AttributeMapper attributeMapper = new AttributeMapper();
-    public void addAttribute(AttributeDTO attributeDTO) {
+    public void addAttribute(AttributeCreateDTO attributeCreateDTO) {
 
-        attributeExists(attributeDTO);
+        attributeExists(attributeCreateDTO);
 
-        ProductAttribute attribute = attributeMapper.toAttribute(attributeDTO);
+        ProductAttribute attribute = attributeMapper.toAttribute(attributeCreateDTO);
 
         List<AttributeValue> attributeValues = new ArrayList<>();
-        for(String value : attributeDTO.getValues()) {
+        for(String value : attributeCreateDTO.getValues()) {
             attributeValues.add(new AttributeValue(value, attribute));
         }
+        List<Subcategory> subcategories = new ArrayList<>();
+        for(int id: attributeCreateDTO.getSubcategories())
+            attribute.getSubcategories().add(subcategoryRepository.getReferenceById(id));
 
+        attribute.setSubcategories(subcategories);
         attribute.setAttributeValues(attributeValues);
         productAttributeRepository.save(attribute);
-        saveAssignedValues(attribute);
+        saveAssignedValues(attribute); // save (attribute - value) combination
 
     }
 
-    private void attributeExists(AttributeDTO attributeDTO) {
+    private void attributeExists(AttributeCreateDTO attributeCreateDTO) {
         for(ProductAttribute attribute : productAttributeRepository.findAll())
-            if(attribute.getName().equals(attributeDTO.getName()))
+            if(attribute.getName().equals(attributeCreateDTO.getName()))
                 throw new EntityAlreadyExists("Exception, attribute already exists");
     }
 
@@ -94,7 +102,7 @@ public class AttributeService {
     }
 
 
-    public List<AttributeDTO> getAttributes(){
+    public List<AttributeCreateDTO> getAttributes(){
 
         return productAttributeRepository.findAll()
                 .stream()

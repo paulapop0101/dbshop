@@ -2,6 +2,7 @@ package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.exceptions.EntityAlreadyExists;
 import dd.projects.ddshop.exceptions.EntityDoesNotExist;
+import dd.projects.ddshop.exceptions.IncorrectInput;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +23,10 @@ public class EntityExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> entityAlreadyExists(RuntimeException runtimeException, WebRequest webRequest){
         String bodyOfResponse = runtimeException.getMessage();
         return handleExceptionInternal(runtimeException, bodyOfResponse, new HttpHeaders(), HttpStatus.ALREADY_REPORTED, webRequest);
+    }
+    @ExceptionHandler(value = {IncorrectInput.class})
+    protected ResponseEntity<Object> incorrectInput(RuntimeException runtimeException, WebRequest webRequest){
+        String bodyOfResponse = runtimeException.getMessage();
+        return handleExceptionInternal(runtimeException, bodyOfResponse, new HttpHeaders(), HttpStatus.valueOf("Wrong Input"), webRequest);
     }
 }

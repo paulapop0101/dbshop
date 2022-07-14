@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -22,4 +23,7 @@ public class Cart {
     private User user;
 
     private float total_price;
+
+    @OneToMany(mappedBy = "cart_id",cascade = CascadeType.ALL)
+    private List<Cart_entry> cart_entries;
 }

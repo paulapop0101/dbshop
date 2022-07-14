@@ -23,12 +23,17 @@ public class CategoryController {
     }
 
     @PostMapping("/addCategory")
-    public ResponseEntity<Object> addCategory(@RequestBody CategoryDTO categoryDTO){
-        categoryService.addCategory(categoryDTO);
+    public ResponseEntity<Object> addCategory(@RequestParam(name= "name") final String name){
+        categoryService.addCategory(name);
         return new ResponseEntity<>("Category has been added",HttpStatus.OK);
     }
+    @PostMapping("/addSubcategory/{id}")
+    public ResponseEntity<Object> addSubcategory(@RequestParam(name= "name") final String name, @PathVariable int id){
+        categoryService.addSubcategory(name,id);
+        return new ResponseEntity<>("Subcategory has been added",HttpStatus.OK);
+    }
     @DeleteMapping("/deleteCategory/{id}")
-    public ResponseEntity<Object> deleteCategory(@PathVariable int id){
+    public ResponseEntity<Object> deleteCategory(@PathVariable final int id){
         categoryService.deleteCategory(id);
         return new ResponseEntity<>("Category has been deleted",HttpStatus.OK);
     }

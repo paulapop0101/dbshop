@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -17,6 +18,12 @@ public class Variant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    private int quantity;
+
+    private float price;
+
+    private Timestamp added_date;
 
     @ManyToOne
     @JoinColumn(name="product_id", referencedColumnName = "id")

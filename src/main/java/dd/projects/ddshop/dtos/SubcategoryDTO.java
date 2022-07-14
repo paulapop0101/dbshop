@@ -3,11 +3,9 @@ package dd.projects.ddshop.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
-public class CategoryDTO {
+public class SubcategoryDTO {
+    int id;
     String name;
-    List<String> subcategories;
 }
