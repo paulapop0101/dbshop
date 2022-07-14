@@ -7,8 +7,8 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class AttributeDTO {
-    int id;
-    List<AttributeValueDTO> values;
-    List<SubcategoryDTO> subcategories;
+public class AttributeCreateDTO {
+    String name;
+    List<String> values;
+    List<Integer> subcategories;
 }
