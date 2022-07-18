@@ -2,6 +2,7 @@ package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.AppConfiguration;
 import dd.projects.ddshop.dtos.VariantCreateDTO;
+import dd.projects.ddshop.dtos.VariantDTO;
 import dd.projects.ddshop.models.Address;
 import dd.projects.ddshop.models.Variant;
 import dd.projects.ddshop.services.AddressService;
@@ -24,7 +25,7 @@ public class VariantController {
     }
 
     @GetMapping("/getAllVariants")
-    public ResponseEntity<List<Variant>> getAllVariants() {
+    public ResponseEntity<List<VariantDTO>> getAllVariants() {
         return new ResponseEntity<>(variantService.getAllVariants(), HttpStatus.OK);
     }
 

@@ -1,21 +1,18 @@
 package dd.projects.ddshop.services;
 
-import dd.projects.ddshop.dtos.AssignedValueDTO;
 import dd.projects.ddshop.dtos.VariantCreateDTO;
+import dd.projects.ddshop.dtos.VariantDTO;
 import dd.projects.ddshop.exceptions.EntityDoesNotExist;
 import dd.projects.ddshop.mappers.VariantMapper;
-import dd.projects.ddshop.models.AssignedValue;
 import dd.projects.ddshop.models.Variant;
 import dd.projects.ddshop.repositories.AssignedValueRepository;
 import dd.projects.ddshop.repositories.ProductRepository;
 import dd.projects.ddshop.repositories.VariantRepository;
 import dd.projects.ddshop.validations.VariantValidation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
+import java.util.stream.Collectors;
 
 @Service
 public class VariantService {
@@ -29,7 +26,7 @@ public class VariantService {
     public VariantService(VariantRepository variantRepository,ProductRepository productRepository,AssignedValueRepository assignedValueRepository){
         this.variantRepository=variantRepository;
         this.assignedValueRepository=assignedValueRepository;
-        this.variantMapper = new VariantMapper(assignedValueRepository,productRepository);
+        this.variantMapper = new VariantMapper(productRepository);
     }
 
     public void addVariant(VariantCreateDTO variantCreateDTO){
@@ -41,8 +38,8 @@ public class VariantService {
 
     }
 
-    public List<Variant> getAllVariants() {
-        return  variantRepository.findAll();
+    public List<VariantDTO> getAllVariants() {
+        return  variantRepository.findAll().stream().map(variantMapper::toVariantDTO).collect(Collectors.toList());
     }
     public void updateVariant(Variant variant){
         variantRepository.save(variant);

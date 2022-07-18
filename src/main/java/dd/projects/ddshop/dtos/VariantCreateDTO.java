@@ -13,7 +13,6 @@ public class VariantCreateDTO {
 
     private int product_id;
 
-  // private List<AssignedValueDTO> assignedValues;
     private List<Integer> assignedValues;
 }
 
