@@ -9,6 +9,7 @@ import dd.projects.ddshop.models.Variant;
 import dd.projects.ddshop.repositories.AssignedValueRepository;
 import dd.projects.ddshop.repositories.ProductRepository;
 import dd.projects.ddshop.repositories.VariantRepository;
+import dd.projects.ddshop.validations.VariantValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class VariantService {
     private final VariantRepository variantRepository;
     private final VariantMapper variantMapper;
 
+    private final VariantValidation variantValidation = new VariantValidation();
     private final AssignedValueRepository assignedValueRepository;
     public VariantService(VariantRepository variantRepository,ProductRepository productRepository,AssignedValueRepository assignedValueRepository){
         this.variantRepository=variantRepository;
@@ -31,16 +33,10 @@ public class VariantService {
     }
 
     public void addVariant(VariantCreateDTO variantCreateDTO){
-
+        variantValidation.variantValidation(variantCreateDTO);
         Variant variant= variantMapper.toVariant(variantCreateDTO);
         for(int assignedValueDTO:variantCreateDTO.getAssignedValues())
             variant.getAssignedValues().add(assignedValueRepository.getReferenceById(assignedValueDTO));
-
-//        List<AssignedValue> values = variantCreateDTO.getAssignedValues()
-//                .stream()
-//                .map(variantMapper::toAssignedValue)
-//                .collect(toList());
-//        variant.setAssignedValues(values);
         variantRepository.save(variant);
 
     }

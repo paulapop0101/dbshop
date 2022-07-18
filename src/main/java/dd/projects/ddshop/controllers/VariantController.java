@@ -1,18 +1,24 @@
 package dd.projects.ddshop.controllers;
 
+import dd.projects.ddshop.AppConfiguration;
 import dd.projects.ddshop.dtos.VariantCreateDTO;
 import dd.projects.ddshop.models.Address;
 import dd.projects.ddshop.models.Variant;
 import dd.projects.ddshop.services.AddressService;
 import dd.projects.ddshop.services.VariantService;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
+
 @RestController
 public class VariantController {
     private final VariantService variantService;
+
+    private final MessageSource messageSource = new AppConfiguration().messageSource();
     public VariantController(VariantService variantService){
         this.variantService = variantService;
     }
@@ -24,20 +30,19 @@ public class VariantController {
 
     @PostMapping("/addVariant")
     public ResponseEntity<Object> addVariant(@RequestBody VariantCreateDTO variantCreateDTO){
-        System.out.println("heree");
         variantService.addVariant(variantCreateDTO);
-        return new ResponseEntity<>("Variant added",HttpStatus.OK);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH),HttpStatus.OK);
     }
     @PutMapping("/updateVariant")
     public ResponseEntity<Object> updateVariant(@RequestBody Variant variant)  {
         variantService.variantExists(variant.getId());
         variantService.updateVariant(variant);
-        return new ResponseEntity<>("Variant with id:"+variant.getId()+ "was updated.", HttpStatus.OK);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.update.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteVariant/{id}")
     public ResponseEntity<Object> deleteVariant(@PathVariable int id)  {
         variantService.deleteVariant(id);
-        return new ResponseEntity<>("Variant with id: " + id + " was deleted.", HttpStatus.OK);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }
 }

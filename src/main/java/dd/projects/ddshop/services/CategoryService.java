@@ -1,13 +1,12 @@
 package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.dtos.CategoryDTO;
-import dd.projects.ddshop.exceptions.EntityAlreadyExists;
-import dd.projects.ddshop.exceptions.IncorrectInput;
 import dd.projects.ddshop.mappers.CategoryMapper;
 import dd.projects.ddshop.models.Category;
 import dd.projects.ddshop.models.Subcategory;
 import dd.projects.ddshop.repositories.CategoryRepository;
 import dd.projects.ddshop.repositories.SubcategoryRepository;
+import dd.projects.ddshop.validations.CategoryValidation;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,43 +21,26 @@ public class CategoryService {
     private final SubcategoryRepository subcategoryRepository;
 
     private final CategoryMapper categoryMapper = new CategoryMapper();
+    private final CategoryValidation categoryValidation;
 
     public CategoryService(CategoryRepository categoryRepository, SubcategoryRepository subcategoryRepository) {
         this.subcategoryRepository = subcategoryRepository;
         this.categoryRepository = categoryRepository;
+        this.categoryValidation = new CategoryValidation(categoryRepository, subcategoryRepository);
     }
-    public void addCategory(String name){
-        checkEmpty(name);
-        checkExists(name);
-        Category category = new Category(name);
 
+    public void addCategory(String name){
+        categoryValidation.categoryValidation(name);
+        Category category = new Category(name);
         categoryRepository.save(category);
 
     }
 
-    private void checkEmpty(String name) {
-        if(name.isEmpty())
-            throw new IncorrectInput("Field should not be empty");
-    }
-
-    private void checkExists(String name) {
-        for(Category c : categoryRepository.findAll())
-            if(c.getName().equals(name))
-                throw new EntityAlreadyExists("Category with this name already exists");
-    }
-
     public void addSubcategory(final String name, final int id){
-        checkEmpty(name);
+        categoryValidation.subcategoryValidation(name);
         Category category = categoryRepository.getReferenceById(id);
-        checkSubcategoryExists(name,category);
         Subcategory subcategory = new Subcategory(name,category);
         subcategoryRepository.save(subcategory);
-    }
-
-    private void checkSubcategoryExists(String name, Category category) {
-        for(Subcategory subcategory:category.getSubcategories())
-            if(subcategory.getName().equals(name))
-                throw new EntityAlreadyExists("Subcategory with this name already exists");
     }
 
     public void deleteCategory(int id){
@@ -70,4 +52,5 @@ public class CategoryService {
                 .map(categoryMapper::toDTO)
                 .collect(toList());
     }
+
 }

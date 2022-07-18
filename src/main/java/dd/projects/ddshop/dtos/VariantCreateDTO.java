@@ -7,9 +7,9 @@ import java.util.List;
 
 @Data@AllArgsConstructor
 public class VariantCreateDTO {
-    private int quantity;
+    private String quantity;
 
-    private float price;
+    private String price;
 
     private int product_id;
 

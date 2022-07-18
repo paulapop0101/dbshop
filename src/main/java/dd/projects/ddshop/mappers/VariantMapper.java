@@ -31,7 +31,7 @@ public class VariantMapper {
     }
 
     public Variant toVariant(VariantCreateDTO variantCreateDTO){
-        return new Variant(variantCreateDTO.getQuantity(),
-                variantCreateDTO.getPrice(),productRepository.getReferenceById(variantCreateDTO.getProduct_id()));
+        return new Variant(Integer.parseInt(variantCreateDTO.getQuantity()),
+                Float.parseFloat(variantCreateDTO.getPrice()),productRepository.getReferenceById(variantCreateDTO.getProduct_id()));
     }
 }
