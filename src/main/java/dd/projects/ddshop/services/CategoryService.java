@@ -1,6 +1,8 @@
 package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.dtos.CategoryDTO;
+import dd.projects.ddshop.exceptions.EntityAlreadyExists;
+import dd.projects.ddshop.exceptions.IncorrectInput;
 import dd.projects.ddshop.mappers.CategoryMapper;
 import dd.projects.ddshop.models.Category;
 import dd.projects.ddshop.models.Subcategory;
@@ -26,18 +28,39 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
     public void addCategory(String name){
-
+        checkEmpty(name);
+        checkExists(name);
         Category category = new Category(name);
 
         categoryRepository.save(category);
 
     }
 
-    public void addSubcategory(String name, int id){
+    private void checkEmpty(String name) {
+        if(name.isEmpty())
+            throw new IncorrectInput("Field should not be empty");
+    }
+
+    private void checkExists(String name) {
+        for(Category c : categoryRepository.findAll())
+            if(c.getName().equals(name))
+                throw new EntityAlreadyExists("Category with this name already exists");
+    }
+
+    public void addSubcategory(final String name, final int id){
+        checkEmpty(name);
         Category category = categoryRepository.getReferenceById(id);
+        checkSubcategoryExists(name,category);
         Subcategory subcategory = new Subcategory(name,category);
         subcategoryRepository.save(subcategory);
     }
+
+    private void checkSubcategoryExists(String name, Category category) {
+        for(Subcategory subcategory:category.getSubcategories())
+            if(subcategory.getName().equals(name))
+                throw new EntityAlreadyExists("Subcategory with this name already exists");
+    }
+
     public void deleteCategory(int id){
         categoryRepository.deleteById(id);
     }

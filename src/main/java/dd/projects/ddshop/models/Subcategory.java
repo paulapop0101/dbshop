@@ -2,6 +2,7 @@ package dd.projects.ddshop.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
+@ToString
 @Table(name = "subcategory")
 public class Subcategory {
 
@@ -23,18 +25,17 @@ public class Subcategory {
   @JoinColumn(name="category_id", referencedColumnName = "id")
   private Category category;
 
-  @ManyToMany
-  @JoinTable(name = "subcategory_product_attribute",
-          joinColumns = @JoinColumn(name = "product_attribute_id", referencedColumnName = "id"),
-          inverseJoinColumns = @JoinColumn(name = "subcategory_id",
-                  referencedColumnName = "id"))
+  @ManyToMany(mappedBy = "subcategories")
   private List<ProductAttribute> productAttributes;
 
+  @OneToMany(mappedBy = "subcategory")
+  private List<Product> products;
 
   public Subcategory(String name, Category category) {
     this.name = name;
     this.category=category;
     this.productAttributes = new ArrayList<>();
+    this.products = new ArrayList<>();
   }
 
 

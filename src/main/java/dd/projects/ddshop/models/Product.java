@@ -5,8 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,7 +23,7 @@ public class Product {
 
     private String description;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="subcategory_id", referencedColumnName = "id")
     private Subcategory subcategory;
 
@@ -35,7 +34,7 @@ public class Product {
         this.name=name;
         this.description=description;
         this.subcategory = subcategory;
-        // DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        // LocalDateTime now = LocalDateTime.now();
+        this.variants=new ArrayList<>();
     }
+
 }

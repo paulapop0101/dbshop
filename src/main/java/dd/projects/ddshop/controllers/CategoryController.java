@@ -28,7 +28,7 @@ public class CategoryController {
         return new ResponseEntity<>("Category has been added",HttpStatus.OK);
     }
     @PostMapping("/addSubcategory/{id}")
-    public ResponseEntity<Object> addSubcategory(@RequestParam(name= "name") final String name, @PathVariable int id){
+    public ResponseEntity<Object> addSubcategory(@RequestParam(name= "name") final String name, @PathVariable final int id){
         categoryService.addSubcategory(name,id);
         return new ResponseEntity<>("Subcategory has been added",HttpStatus.OK);
     }

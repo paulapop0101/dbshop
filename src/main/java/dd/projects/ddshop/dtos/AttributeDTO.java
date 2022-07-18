@@ -9,6 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AttributeDTO {
     int id;
+    String name;
     List<AttributeValueDTO> values;
     List<SubcategoryDTO> subcategories;
 }

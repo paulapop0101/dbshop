@@ -21,7 +21,11 @@ public class ProductAttribute {
 
     private String name;
 
-    @ManyToMany(mappedBy = "productAttributes")
+    @ManyToMany
+    @JoinTable(name = "subcategory_product_attribute",
+            joinColumns = @JoinColumn(name = "product_attribute_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "subcategory_id",
+                    referencedColumnName = "id"))
     private List<Subcategory> subcategories;
 
     @OneToMany(mappedBy = "product_attributes",cascade = CascadeType.ALL)

@@ -1,5 +1,6 @@
 package dd.projects.ddshop.controllers;
 
+import dd.projects.ddshop.dtos.VariantCreateDTO;
 import dd.projects.ddshop.models.Address;
 import dd.projects.ddshop.models.Variant;
 import dd.projects.ddshop.services.AddressService;
@@ -11,14 +12,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
 public class VariantController {
-    VariantService variantService;
+    private final VariantService variantService;
+    public VariantController(VariantService variantService){
+        this.variantService = variantService;
+    }
 
     @GetMapping("/getAllVariants")
     public ResponseEntity<List<Variant>> getAllVariants() {
         return new ResponseEntity<>(variantService.getAllVariants(), HttpStatus.OK);
     }
 
-
+    @PostMapping("/addVariant")
+    public ResponseEntity<Object> addVariant(@RequestBody VariantCreateDTO variantCreateDTO){
+        System.out.println("heree");
+        variantService.addVariant(variantCreateDTO);
+        return new ResponseEntity<>("Variant added",HttpStatus.OK);
+    }
     @PutMapping("/updateVariant")
     public ResponseEntity<Object> updateVariant(@RequestBody Variant variant)  {
         variantService.variantExists(variant.getId());

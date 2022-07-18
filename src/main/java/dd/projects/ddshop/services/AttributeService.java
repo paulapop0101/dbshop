@@ -1,8 +1,11 @@
 package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.dtos.AttributeCreateDTO;
+import dd.projects.ddshop.dtos.AttributeDTO;
+import dd.projects.ddshop.dtos.SubcategoryDTO;
 import dd.projects.ddshop.exceptions.EntityAlreadyExists;
 import dd.projects.ddshop.mappers.AttributeMapper;
+import dd.projects.ddshop.mappers.CategoryMapper;
 import dd.projects.ddshop.models.AssignedValue;
 import dd.projects.ddshop.models.AttributeValue;
 import dd.projects.ddshop.models.ProductAttribute;
@@ -14,7 +17,9 @@ import dd.projects.ddshop.repositories.SubcategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
@@ -38,25 +43,29 @@ public class AttributeService {
     }
 
     private final AttributeMapper attributeMapper = new AttributeMapper();
+
     public void addAttribute(AttributeCreateDTO attributeCreateDTO) {
 
         attributeExists(attributeCreateDTO);
-
+        checkDuplicates(attributeCreateDTO.getValues());
         ProductAttribute attribute = attributeMapper.toAttribute(attributeCreateDTO);
-
-        List<AttributeValue> attributeValues = new ArrayList<>();
         for(String value : attributeCreateDTO.getValues()) {
-            attributeValues.add(new AttributeValue(value, attribute));
+            attribute.getAttributeValues().add(new AttributeValue(value, attribute));
         }
-        List<Subcategory> subcategories = new ArrayList<>();
-        for(int id: attributeCreateDTO.getSubcategories())
-            attribute.getSubcategories().add(subcategoryRepository.getReferenceById(id));
 
-        attribute.setSubcategories(subcategories);
-        attribute.setAttributeValues(attributeValues);
+        for(int id: attributeCreateDTO.getSubcategories()){
+            attribute.getSubcategories().add(subcategoryRepository.getReferenceById(id));
+        }
+
         productAttributeRepository.save(attribute);
         saveAssignedValues(attribute); // save (attribute - value) combination
 
+
+    }
+    private void checkDuplicates(List<String> values) {
+        Set<String> set = new HashSet<>(values);
+        if(set.size()!=values.size())
+            throw new EntityAlreadyExists("Exception, value duplicates found");
     }
 
     private void attributeExists(AttributeCreateDTO attributeCreateDTO) {
@@ -102,7 +111,7 @@ public class AttributeService {
     }
 
 
-    public List<AttributeCreateDTO> getAttributes(){
+    public List<AttributeDTO> getAttributes(){
 
         return productAttributeRepository.findAll()
                 .stream()
@@ -110,4 +119,9 @@ public class AttributeService {
                 .collect(toList());
     }
 
+    public void addSubcategoryToAttribute(SubcategoryDTO subcategoryDTO, int id) {
+        ProductAttribute attribute = productAttributeRepository.getReferenceById(id);
+        attribute.getSubcategories().add(subcategoryRepository.getReferenceById(subcategoryDTO.getId()));
+        productAttributeRepository.save(attribute);
+    }
 }

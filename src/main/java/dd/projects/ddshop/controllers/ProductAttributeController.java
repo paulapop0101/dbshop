@@ -1,6 +1,8 @@
 package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.AttributeCreateDTO;
+import dd.projects.ddshop.dtos.AttributeDTO;
+import dd.projects.ddshop.dtos.SubcategoryDTO;
 import dd.projects.ddshop.services.AttributeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,11 @@ public class ProductAttributeController {
         attributeService.addAttribute(attributeCreateDTO);
         return new ResponseEntity<>("New attribute was created.", HttpStatus.OK);
     }
+    @PostMapping("/addSubcategoryToAttribute/{id}")
+    public ResponseEntity<Object> addSubcategoryToAttribute(@RequestBody SubcategoryDTO subcategoryDTO, @PathVariable int id) {
+        attributeService.addSubcategoryToAttribute(subcategoryDTO,id);
+        return new ResponseEntity<>("New attribute was created.", HttpStatus.OK);
+    }
     @PostMapping("/addAttributeValue/{id}")
     public ResponseEntity<String> addAttributeValue(@RequestBody String value, @PathVariable int id) {
         attributeService.addAttributeValue(id,value);
@@ -39,7 +46,7 @@ public class ProductAttributeController {
         return new ResponseEntity<>("Attribute was deleted.", HttpStatus.OK);
     }
     @GetMapping("/getAttributes")
-    public ResponseEntity<List<AttributeCreateDTO>> getAttributes(){
+    public ResponseEntity<List<AttributeDTO>> getAttributes(){
         return new ResponseEntity<>(attributeService.getAttributes(), HttpStatus.OK);
     }
 }

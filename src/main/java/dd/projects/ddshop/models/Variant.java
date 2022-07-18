@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -29,11 +30,21 @@ public class Variant {
     @JoinColumn(name="product_id", referencedColumnName = "id")
     private Product product;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "variant_assigned_value",
-            joinColumns = @JoinColumn(name = "assigned_value_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "variant_id",
+            joinColumns = @JoinColumn(name = "variant_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "assigned_value_id",
                     referencedColumnName = "id"))
     private List<AssignedValue> assignedValues;
+
+    public Variant(int quantity, float price, Product product) {
+        this.quantity = quantity;
+        this.price=price;
+        this.product=product;
+        this.assignedValues = new ArrayList<>();
+        long datetime = System.currentTimeMillis();
+        this.added_date = new Timestamp(datetime);
+    }
+
 
 }

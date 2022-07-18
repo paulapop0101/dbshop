@@ -9,7 +9,7 @@ public class AddressDTO {
     private String streetLine;
 
 
-    private int postalCode;
+    private String postalCode;
 
     private String city;
 

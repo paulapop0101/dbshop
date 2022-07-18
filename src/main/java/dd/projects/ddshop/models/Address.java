@@ -22,7 +22,7 @@ public class Address {
     private String streetLine;
 
 
-    private int postalCode;
+    private String postalCode;
 
     private String city;
 
@@ -30,7 +30,7 @@ public class Address {
 
     private String country;
 
-    public Address(String streetLine, int postalCode, String city, String county, String country) {
+    public Address(String streetLine, String postalCode, String city, String county, String country) {
         this.streetLine = streetLine;
         this.city=city;
         this.country=country;

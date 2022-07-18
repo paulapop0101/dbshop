@@ -27,7 +27,7 @@ public class AssignedValue {
     @JoinColumn(name="attribute_value_id", referencedColumnName = "id")
     AttributeValue attributeValue;
 
-    @ManyToMany(mappedBy = "assignedValues")
+    @ManyToMany(mappedBy = "assignedValues",cascade = CascadeType.ALL)
     private List<Variant> variants;
 
     public AssignedValue(ProductAttribute attribute, AttributeValue attributeValue) {

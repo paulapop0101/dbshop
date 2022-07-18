@@ -27,6 +27,6 @@ public class EntityExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {IncorrectInput.class})
     protected ResponseEntity<Object> incorrectInput(RuntimeException runtimeException, WebRequest webRequest){
         String bodyOfResponse = runtimeException.getMessage();
-        return handleExceptionInternal(runtimeException, bodyOfResponse, new HttpHeaders(), HttpStatus.valueOf("Wrong Input"), webRequest);
+        return handleExceptionInternal(runtimeException, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, webRequest);
     }
 }
