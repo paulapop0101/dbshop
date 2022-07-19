@@ -1,18 +1,12 @@
 package dd.projects.ddshop.validations;
 
-import dd.projects.ddshop.AppConfiguration;
-import dd.projects.ddshop.dtos.Util;
+import dd.projects.ddshop.utils.Util;
 import dd.projects.ddshop.exceptions.EntityAlreadyExists;
 import dd.projects.ddshop.exceptions.IncorrectInput;
 import dd.projects.ddshop.models.Category;
 import dd.projects.ddshop.models.Subcategory;
 import dd.projects.ddshop.repositories.CategoryRepository;
 import dd.projects.ddshop.repositories.SubcategoryRepository;
-import org.springframework.context.MessageSource;
-import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.NoSuchMessageException;
-
-import java.util.Locale;
 
 public class CategoryValidation {
     private final CategoryRepository categoryRepository;

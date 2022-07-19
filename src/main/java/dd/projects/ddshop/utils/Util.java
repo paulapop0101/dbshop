@@ -1,4 +1,4 @@
-package dd.projects.ddshop.dtos;
+package dd.projects.ddshop.utils;
 
 import dd.projects.ddshop.AppConfiguration;
 import org.springframework.context.MessageSource;

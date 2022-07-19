@@ -1,7 +1,7 @@
 package dd.projects.ddshop.validations;
 
 import dd.projects.ddshop.dtos.AttributeCreateDTO;
-import dd.projects.ddshop.dtos.Util;
+import dd.projects.ddshop.utils.Util;
 import dd.projects.ddshop.exceptions.EntityAlreadyExists;
 import dd.projects.ddshop.exceptions.IncorrectInput;
 import dd.projects.ddshop.models.AttributeValue;

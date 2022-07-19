@@ -1,6 +1,7 @@
 package dd.projects.ddshop.dtos;
 
 import dd.projects.ddshop.models.Address;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.CascadeType;
@@ -8,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Data
+@AllArgsConstructor
 public class UserCreationDTO {
 
     private String firstname;
