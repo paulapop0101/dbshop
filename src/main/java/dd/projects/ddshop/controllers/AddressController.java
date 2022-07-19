@@ -1,19 +1,23 @@
 package dd.projects.ddshop.controllers;
 
+import dd.projects.ddshop.AppConfiguration;
 import dd.projects.ddshop.dtos.AddressDTO;
 import dd.projects.ddshop.models.Address;
 import dd.projects.ddshop.services.AddressService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 public class AddressController {
 
     private final AddressService addressService;
+
+    private final MessageSource messageSource = new AppConfiguration().messageSource();
     public AddressController(AddressService addressService){
         this.addressService = addressService;
     }
@@ -25,19 +29,19 @@ public class AddressController {
     @PostMapping("/addAddress")
     public ResponseEntity<Object> addAddress(@RequestBody Address address) {
         addressService.addAddress(address);
-        return new ResponseEntity<>("Address with id: was created.", HttpStatus.OK);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }
 
     @PutMapping("/updateAddress/{id}")
     public ResponseEntity<Object> updateAddress(@RequestBody AddressDTO address, @PathVariable int id){
         addressService.updateAddress(address,id);
-        return new ResponseEntity<>("Address with id:"+id+" was updated.", HttpStatus.OK);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.update.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteAddress/{id}")
-    public ResponseEntity<Object> deleteStudent(@PathVariable int id)  {
+    public ResponseEntity<Object> deleteAddress(@PathVariable int id)  {
         addressService.deleteAddress(id);
-        return new ResponseEntity<>("Address with id: " + id + " was deleted.", HttpStatus.OK);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH), HttpStatus.OK);
     }
 
 

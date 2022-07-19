@@ -40,7 +40,7 @@ public class CategoryController {
     @DeleteMapping("/deleteCategory/{id}")
     public ResponseEntity<Object> deleteCategory(@PathVariable final int id){
         categoryService.deleteCategory(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successful", null, Locale.ENGLISH),HttpStatus.OK);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH),HttpStatus.OK);
     }
 
 }

@@ -31,24 +31,24 @@ public class ProductAttributeController {
         return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }
     @PostMapping("/addSubcategoryToAttribute/{id}")
-    public ResponseEntity<Object> addSubcategoryToAttribute(@RequestBody SubcategoryDTO subcategoryDTO, @PathVariable int id) {
+    public ResponseEntity<Object> addSubcategoryToAttribute(@RequestBody SubcategoryDTO subcategoryDTO, @PathVariable final int id) {
         attributeService.addSubcategoryToAttribute(subcategoryDTO,id);
         return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }
     @PostMapping("/addAttributeValue/{id}")
-    public ResponseEntity<String> addAttributeValue(@RequestBody String value, @PathVariable int id) {
+    public ResponseEntity<String> addAttributeValue(@RequestBody String value, @PathVariable final int id) {
         attributeService.addAttributeValue(id,value);
         return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }
     @DeleteMapping("/deleteAttributeValue/{id}")
-    public ResponseEntity<Object> deleteAttributeValue(@PathVariable int id){
+    public ResponseEntity<Object> deleteAttributeValue(@PathVariable final int id){
         attributeService.deleteAttributeValue(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successful", null, Locale.ENGLISH), HttpStatus.OK);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH), HttpStatus.OK);
     }
     @DeleteMapping("/deleteAttribute/{id}")
-    public ResponseEntity<Object> deleteAttribute(@PathVariable int id){
+    public ResponseEntity<Object> deleteAttribute(@PathVariable final int id){
         attributeService.deleteAttribute(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successful", null, Locale.ENGLISH), HttpStatus.OK);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH), HttpStatus.OK);
     }
     @GetMapping("/getAttributes")
     public ResponseEntity<List<AttributeDTO>> getAttributes(){

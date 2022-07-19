@@ -27,17 +27,15 @@ public class CartService {
         this.variantRepository = variantRepository;
     }
 
-    public void addEntry(CartEntryDTO cartEntryDTO, int user_id){
+    public void addEntry(CartEntryDTO cartEntryDTO, final int user_id){
         Cart cart = cartExists(user_id);
         if (cart==null) {
             cart = new Cart(userRepository.getReferenceById(user_id));
             cartRepository.save(cart);
-            cart=cartExists(user_id);
         }
 
         Cart_entry entry = entryExists(cart,cartEntryDTO.getVariant_id());
         if(entry!=null){ //if variant already in cart
-            System.out.println("here in cart");
             entry.setQuantity(entry.getQuantity()+cartEntryDTO.getQuantity());
             entry.setTotal_price_per_entity(entry.getPrice_per_piece()*entry.getQuantity());
             cart.setTotal_price(cart.getTotal_price()+entry.getPrice_per_piece()*cartEntryDTO.getQuantity());

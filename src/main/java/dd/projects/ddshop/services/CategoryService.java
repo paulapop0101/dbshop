@@ -43,7 +43,7 @@ public class CategoryService {
         subcategoryRepository.save(subcategory);
     }
 
-    public void deleteCategory(int id){
+    public void deleteCategory(final int id){
         categoryRepository.deleteById(id);
     }
     public List<CategoryDTO> getCategories(){

@@ -23,11 +23,8 @@ public class AttributeService {
 
 
     private final ProductAttributeRepository productAttributeRepository;
-
     private final AttributeValueRepository attributeValueRepository;
-
     private final AssignedValueRepository assignedValueRepository;
-
     private final SubcategoryRepository subcategoryRepository;
     private final AttributeValidation attributeValidation;
 
@@ -63,11 +60,11 @@ public class AttributeService {
             assignedValueRepository.save(new AssignedValue(attribute,attributeValue));
     }
 
-    public void deleteAttributeValue(int id){
+    public void deleteAttributeValue(final int id){
         attributeValueRepository.deleteById(id);
 
     }
-    public void addAttributeValue(int id, String value){
+    public void addAttributeValue(final int id, String value){
         attributeValidation.checkAttributeValue(value,id);
 
         ProductAttribute productAttribute = productAttributeRepository.getReferenceById(id);
@@ -79,7 +76,7 @@ public class AttributeService {
 
     }
 
-    public void deleteAttribute(int id){
+    public void deleteAttribute(final int id){
         productAttributeRepository.deleteById(id);
     }
 
@@ -92,7 +89,7 @@ public class AttributeService {
                 .collect(toList());
     }
 
-    public void addSubcategoryToAttribute(SubcategoryDTO subcategoryDTO, int id) {
+    public void addSubcategoryToAttribute(SubcategoryDTO subcategoryDTO, final int id) {
         ProductAttribute attribute = productAttributeRepository.getReferenceById(id);
         attribute.getSubcategories().add(subcategoryRepository.getReferenceById(subcategoryDTO.getId()));
         productAttributeRepository.save(attribute);

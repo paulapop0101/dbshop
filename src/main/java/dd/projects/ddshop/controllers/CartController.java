@@ -28,12 +28,12 @@ public class CartController {
     @DeleteMapping("/deleteCartEntry/{id}")
     public ResponseEntity<Object> deleteCartEntry(@PathVariable final int id){
         cartService.deleteCartEntry(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successful", null, Locale.ENGLISH), HttpStatus.OK);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH), HttpStatus.OK);
     }
     @DeleteMapping("/deleteCart/{id}")
     public ResponseEntity<Object> deleteCart(@PathVariable final int id){
         cartService.deleteCart(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successful", null, Locale.ENGLISH), HttpStatus.OK);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH), HttpStatus.OK);
     }
 //    @DeleteMapping("/deleteOneCartEntry/{id}")
 //    public ResponseEntity<Object> deleteOneCartEntry(@PathVariable final int id){

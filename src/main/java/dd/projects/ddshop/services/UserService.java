@@ -44,7 +44,7 @@ public class UserService {
                 .map(userMapper::toDTO)
                 .collect(toList());
     }
-    public void updateUser(UserDTO user, int id){
+    public void updateUser(UserDTO user, final int id){
         userExists(id);
         User u = userRepository.getReferenceById(id);
         u.setFirstname(user.getFirstname());
@@ -52,7 +52,7 @@ public class UserService {
         u.setPhone(user.getPhone());
         userRepository.save(u);
     }
-    public void deleteUser(int id) {
+    public void deleteUser(final int id) {
         userExists(id);
         userRepository.deleteById(id);
     }

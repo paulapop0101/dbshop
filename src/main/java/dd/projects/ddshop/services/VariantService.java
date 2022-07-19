@@ -44,7 +44,7 @@ public class VariantService {
     public void updateVariant(Variant variant){
         variantRepository.save(variant);
     }
-    public void deleteVariant(int id) {
+    public void deleteVariant(final int id) {
         variantExists(id);
         variantRepository.deleteById(id);
     }

@@ -3,9 +3,7 @@ package dd.projects.ddshop.controllers;
 import dd.projects.ddshop.AppConfiguration;
 import dd.projects.ddshop.dtos.VariantCreateDTO;
 import dd.projects.ddshop.dtos.VariantDTO;
-import dd.projects.ddshop.models.Address;
 import dd.projects.ddshop.models.Variant;
-import dd.projects.ddshop.services.AddressService;
 import dd.projects.ddshop.services.VariantService;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -42,8 +40,8 @@ public class VariantController {
     }
 
     @DeleteMapping("/deleteVariant/{id}")
-    public ResponseEntity<Object> deleteVariant(@PathVariable int id)  {
+    public ResponseEntity<Object> deleteVariant(@PathVariable final int id)  {
         variantService.deleteVariant(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successful", null, Locale.ENGLISH), HttpStatus.OK);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH), HttpStatus.OK);
     }
 }

@@ -27,7 +27,7 @@ public class UserController {
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
     }
     @PutMapping("/updateUser/{id}")
-    public ResponseEntity<Object> updateUser(@RequestBody UserDTO userDTO, @PathVariable int id) {
+    public ResponseEntity<Object> updateUser(@RequestBody UserDTO userDTO, @PathVariable final int id) {
         userService.updateUser(userDTO,id);
         return new ResponseEntity<>(messageSource.getMessage("api.response.update.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }
@@ -37,9 +37,9 @@ public class UserController {
         return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }
     @DeleteMapping("/deleteUser/{id}")
-    public ResponseEntity<Object> deleteUser(@PathVariable int id)  {
+    public ResponseEntity<Object> deleteUser(@PathVariable final int id)  {
         userService.deleteUser(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successful", null, Locale.ENGLISH), HttpStatus.OK);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH), HttpStatus.OK);
     }
 
 
