@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -26,4 +27,10 @@ public class Cart {
 
     @OneToMany(mappedBy = "cart_id",cascade = CascadeType.ALL)
     private List<Cart_entry> cart_entries;
+
+    public Cart(User user){
+        this.user=user;
+        this.total_price = 0;
+        this.cart_entries=new ArrayList<>();
+    }
 }

@@ -30,4 +30,12 @@ public class Cart_entry {
     @OneToOne
     @JoinColumn(name="variant_id", referencedColumnName = "id")
     private Variant variant_id;
+
+    public Cart_entry(int quantity, float price, float v, Cart cart, Variant variant) {
+        this.quantity=quantity;
+        this.price_per_piece=price;
+        this.total_price_per_entity=v;
+        this.cart_id = cart;
+        this.variant_id = variant;
+    }
 }
