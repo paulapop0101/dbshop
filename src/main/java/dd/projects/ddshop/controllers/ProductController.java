@@ -8,10 +8,7 @@ import dd.projects.ddshop.services.ProductService;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Locale;
@@ -35,5 +32,10 @@ public class ProductController {
     @GetMapping("/getProducts")
     public ResponseEntity<List<seeProductDTO>> getProducts(){
         return new ResponseEntity<>(productService.getProducts(),HttpStatus.OK);
+    }
+    @DeleteMapping("/deleteProduct/{id}")
+    public ResponseEntity<Object> deleteProduct(@PathVariable final int id){
+        productService.deleteProduct(id);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH), HttpStatus.OK);
     }
 }

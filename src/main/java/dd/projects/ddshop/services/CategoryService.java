@@ -53,4 +53,8 @@ public class CategoryService {
                 .collect(toList());
     }
 
+    public void deleteSubcategory(final int id){
+        subcategoryRepository.deleteById(id);
+    }
+
 }

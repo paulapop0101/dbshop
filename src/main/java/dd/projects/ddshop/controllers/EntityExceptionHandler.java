@@ -22,7 +22,7 @@ public class EntityExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {EntityAlreadyExists.class})
     protected ResponseEntity<Object> entityAlreadyExists(RuntimeException runtimeException, WebRequest webRequest){
         String bodyOfResponse = runtimeException.getMessage();
-        return handleExceptionInternal(runtimeException, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
+        return handleExceptionInternal(runtimeException, bodyOfResponse, new HttpHeaders(), HttpStatus.ALREADY_REPORTED, webRequest);
     }
     @ExceptionHandler(value = {IncorrectInput.class})
     protected ResponseEntity<Object> incorrectInput(RuntimeException runtimeException, WebRequest webRequest){

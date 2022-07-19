@@ -38,4 +38,8 @@ public class ProductService {
                 .map(productMapper::toSeeProductDTO)
                 .collect(toList());
     }
+
+    public void deleteProduct(final int id){
+        productRepository.deleteById(id);
+    }
 }

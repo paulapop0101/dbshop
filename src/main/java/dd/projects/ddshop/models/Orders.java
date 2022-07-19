@@ -40,4 +40,15 @@ public class Orders {
     @OneToOne
     @JoinColumn(name="invoice_address", referencedColumnName = "id")
     private Address invoice_address;
+
+    public Orders(User user, Cart cart, String payment, Address address1, Address address2) {
+        this.user_id=user;
+        this.cart_id=cart;
+        this.payment_type=PaymentType.valueOf(payment);
+        this.delivery_address=address1;
+        this.invoice_address=address2;
+        long datetime = System.currentTimeMillis();
+        this.order_date = new Timestamp(datetime);
+        this.total_price=cart.getTotal_price();
+    }
 }

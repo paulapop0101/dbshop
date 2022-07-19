@@ -36,7 +36,7 @@ public class ProductAttributeController {
         return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }
     @PostMapping("/addAttributeValue/{id}")
-    public ResponseEntity<String> addAttributeValue(@RequestBody String value, @PathVariable final int id) {
+    public ResponseEntity<String> addAttributeValue(@RequestParam(name= "value") final String value, @PathVariable final int id) {
         attributeService.addAttributeValue(id,value);
         return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }

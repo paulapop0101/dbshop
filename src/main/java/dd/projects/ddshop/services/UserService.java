@@ -20,10 +20,11 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    private final UserValidation userValidation = new UserValidation();
+    private final UserValidation userValidation;
 
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
+        this.userValidation = new UserValidation(userRepository);
     }
 
     UserMapper userMapper = new UserMapper();

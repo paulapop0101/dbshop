@@ -25,6 +25,8 @@ public class Cart {
 
     private float total_price;
 
+    private int status;
+
     @OneToMany(mappedBy = "cart_id",cascade = CascadeType.ALL)
     private List<Cart_entry> cart_entries;
 
@@ -32,5 +34,6 @@ public class Cart {
         this.user=user;
         this.total_price = 0;
         this.cart_entries=new ArrayList<>();
+        this.status=0;
     }
 }

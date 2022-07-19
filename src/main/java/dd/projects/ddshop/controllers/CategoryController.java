@@ -42,5 +42,10 @@ public class CategoryController {
         categoryService.deleteCategory(id);
         return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH),HttpStatus.OK);
     }
+    @DeleteMapping("/deleteSubcategory/{id}")
+    public ResponseEntity<Object> deleteSubcategory(@PathVariable final int id){
+        categoryService.deleteSubcategory(id);
+        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH),HttpStatus.OK);
+    }
 
 }
