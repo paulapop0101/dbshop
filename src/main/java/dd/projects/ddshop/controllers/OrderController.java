@@ -15,12 +15,12 @@ public class OrderController {
     private final MessageSource messageSource = new AppConfiguration().messageSource();
     private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(final OrderService orderService) {
         this.orderService = orderService;
     }
 
     @PostMapping("/createOrder")
-    public ResponseEntity<Object> createOrder(@RequestBody OrderCreateDTO orderCreateDTO){
+    public ResponseEntity<Object> createOrder(@RequestBody final OrderCreateDTO orderCreateDTO){
         orderService.createOrder(orderCreateDTO);
         return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }

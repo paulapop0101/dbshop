@@ -18,7 +18,7 @@ public class CategoryController {
 
     private final MessageSource messageSource = new AppConfiguration().messageSource();
 
-    public CategoryController(CategoryService categoryService){
+    public CategoryController(final CategoryService categoryService){
         this.categoryService = categoryService;
     }
 

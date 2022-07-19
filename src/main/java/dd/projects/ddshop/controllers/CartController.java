@@ -16,12 +16,12 @@ public class CartController {
 
     private final MessageSource messageSource = new AppConfiguration().messageSource();
 
-    public CartController(CartService cartService) {
+    public CartController(final CartService cartService) {
         this.cartService = cartService;
     }
 
     @PostMapping("/addCartEntry/{id}")
-    public ResponseEntity<Object> addCartEntry(@RequestBody CartEntryDTO cartEntryDTO, @PathVariable final int id){
+    public ResponseEntity<Object> addCartEntry(@RequestBody final CartEntryDTO cartEntryDTO, @PathVariable final int id){
         cartService.addEntry(cartEntryDTO,id);
         return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }

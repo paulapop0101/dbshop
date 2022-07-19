@@ -10,11 +10,11 @@ import java.util.Locale;
 
 public class ProductValidation {
 
-    public void productValidation(ProductDTO productDTO){
+    public void productValidation(final ProductDTO productDTO){
         checkEmpty(productDTO);
     }
 
-    private void checkEmpty(ProductDTO productDTO) {
+    private void checkEmpty(final ProductDTO productDTO) {
         if(productDTO.getName().isEmpty() || productDTO.getDescription().isEmpty())
             throw new IncorrectInput(Util.getMessage("api.error.empty.fields", null));
     }

@@ -10,7 +10,7 @@ import java.util.Locale;
 
 public class VariantValidation {
     private final MessageSource messageSource = new AppConfiguration().messageSource();
-    public void variantValidation(VariantCreateDTO variantCreateDTO){
+    public void variantValidation(final VariantCreateDTO variantCreateDTO){
         checkEmpty(variantCreateDTO);
         if(!variantCreateDTO.getQuantity().matches("\\d+")||Integer.parseInt(variantCreateDTO.getQuantity())==0) {
             throw new IncorrectInput(Util.getMessage("api.error.quantity.format", null));
@@ -19,7 +19,7 @@ public class VariantValidation {
             throw new IncorrectInput(Util.getMessage("api.error.price.format", null));
     }
 
-    private void checkEmpty(VariantCreateDTO variantCreateDTO) {
+    private void checkEmpty(final VariantCreateDTO variantCreateDTO) {
         if(variantCreateDTO.getQuantity().isEmpty()||variantCreateDTO.getPrice().isEmpty() || variantCreateDTO.getAssignedValues().isEmpty())
             throw new IncorrectInput(Util.getMessage("api.error.empty.fields", null));
     }

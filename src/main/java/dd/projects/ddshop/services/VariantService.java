@@ -23,16 +23,16 @@ public class VariantService {
 
     private final VariantValidation variantValidation = new VariantValidation();
     private final AssignedValueRepository assignedValueRepository;
-    public VariantService(VariantRepository variantRepository,ProductRepository productRepository,AssignedValueRepository assignedValueRepository){
+    public VariantService(final VariantRepository variantRepository, final ProductRepository productRepository, final AssignedValueRepository assignedValueRepository){
         this.variantRepository=variantRepository;
         this.assignedValueRepository=assignedValueRepository;
         this.variantMapper = new VariantMapper(productRepository);
     }
 
-    public void addVariant(VariantCreateDTO variantCreateDTO){
+    public void addVariant(final VariantCreateDTO variantCreateDTO){
         variantValidation.variantValidation(variantCreateDTO);
-        Variant variant= variantMapper.toVariant(variantCreateDTO);
-        for(int assignedValueDTO:variantCreateDTO.getAssignedValues())
+        final Variant variant= variantMapper.toVariant(variantCreateDTO);
+        for(final int assignedValueDTO:variantCreateDTO.getAssignedValues())
             variant.getAssignedValues().add(assignedValueRepository.getReferenceById(assignedValueDTO));
         variantRepository.save(variant);
 
@@ -41,7 +41,7 @@ public class VariantService {
     public List<VariantDTO> getAllVariants() {
         return  variantRepository.findAll().stream().map(variantMapper::toVariantDTO).collect(Collectors.toList());
     }
-    public void updateVariant(Variant variant){
+    public void updateVariant(final Variant variant){
         variantRepository.save(variant);
     }
     public void deleteVariant(final int id) {
@@ -49,7 +49,7 @@ public class VariantService {
         variantRepository.deleteById(id);
     }
 
-    public void variantExists(int id)  {
+    public void variantExists(final int id)  {
         if(!variantRepository.existsById(id)){
             throw new EntityDoesNotExist("Exception: Variant was not found!");
         }

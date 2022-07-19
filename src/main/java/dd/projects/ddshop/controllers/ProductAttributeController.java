@@ -21,17 +21,17 @@ public class ProductAttributeController {
 
     private final MessageSource messageSource = new AppConfiguration().messageSource();
 
-    public ProductAttributeController(AttributeService attributeService){
+    public ProductAttributeController(final AttributeService attributeService){
         this.attributeService = attributeService;
     }
 
     @PostMapping("/addAttribute")
-    public ResponseEntity<Object> addAttribute(@RequestBody AttributeCreateDTO attributeCreateDTO) {
+    public ResponseEntity<Object> addAttribute(@RequestBody final AttributeCreateDTO attributeCreateDTO) {
         attributeService.addAttribute(attributeCreateDTO);
         return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }
     @PostMapping("/addSubcategoryToAttribute/{id}")
-    public ResponseEntity<Object> addSubcategoryToAttribute(@RequestBody SubcategoryDTO subcategoryDTO, @PathVariable final int id) {
+    public ResponseEntity<Object> addSubcategoryToAttribute(@RequestBody final SubcategoryDTO subcategoryDTO, @PathVariable final int id) {
         attributeService.addSubcategoryToAttribute(subcategoryDTO,id);
         return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }

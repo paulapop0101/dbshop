@@ -22,14 +22,14 @@ public class ProductService {
 
     private final ProductValidation productValidation = new ProductValidation();
 
-    public ProductService(ProductRepository productRepository, SubcategoryRepository subcategoryRepository){
+    public ProductService(final ProductRepository productRepository, final SubcategoryRepository subcategoryRepository){
         this.productRepository=productRepository;
         this.subcategoryRepository = subcategoryRepository;
     }
 
-    public void addProduct(ProductDTO productDTO){
+    public void addProduct(final ProductDTO productDTO){
         productValidation.productValidation(productDTO);
-        Product product = productMapper.toProduct(productDTO,subcategoryRepository.getReferenceById(productDTO.getSubcategory().getId()));
+        final Product product = productMapper.toProduct(productDTO,subcategoryRepository.getReferenceById(productDTO.getSubcategory().getId()));
         productRepository.save(product);
     }
     public List<seeProductDTO> getProducts(){

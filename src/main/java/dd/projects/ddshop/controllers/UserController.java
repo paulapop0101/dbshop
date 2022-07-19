@@ -18,7 +18,7 @@ public class UserController {
    private final UserService userService;
 
     private final MessageSource messageSource = new AppConfiguration().messageSource();
-    public UserController(UserService userService){
+    public UserController(final UserService userService){
         this.userService = userService;
     }
 
@@ -27,12 +27,12 @@ public class UserController {
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
     }
     @PutMapping("/updateUser/{id}")
-    public ResponseEntity<Object> updateUser(@RequestBody UserDTO userDTO, @PathVariable final int id) {
+    public ResponseEntity<Object> updateUser(@RequestBody final UserDTO userDTO, @PathVariable final int id) {
         userService.updateUser(userDTO,id);
         return new ResponseEntity<>(messageSource.getMessage("api.response.update.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }
     @PostMapping("/addUser")
-    public ResponseEntity<Object> addUser(@RequestBody UserCreationDTO user) {
+    public ResponseEntity<Object> addUser(@RequestBody final UserCreationDTO user) {
         userService.addUser(user);
         return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }

@@ -22,7 +22,7 @@ public class UserService {
 
     private final UserValidation userValidation;
 
-    public UserService(UserRepository userRepository){
+    public UserService(final UserRepository userRepository){
         this.userRepository = userRepository;
         this.userValidation = new UserValidation(userRepository);
     }
@@ -30,11 +30,11 @@ public class UserService {
     UserMapper userMapper = new UserMapper();
 
     AddressMapper addressMapper = new AddressMapper();
-    public void addUser(UserCreationDTO user){
+    public void addUser(final UserCreationDTO user){
         userValidation.userValidation(user);
-        Address billing_a = addressMapper.toAddress(user.getBilling_address());
-        Address delivery_a = addressMapper.toAddress(user.getDelivery_address());
-        User u= userMapper.toUser(user,billing_a,delivery_a);
+        final Address billing_a = addressMapper.toAddress(user.getBilling_address());
+        final Address delivery_a = addressMapper.toAddress(user.getDelivery_address());
+        final User u= userMapper.toUser(user,billing_a,delivery_a);
         userRepository.save(u);
     }
 
@@ -45,9 +45,9 @@ public class UserService {
                 .map(userMapper::toDTO)
                 .collect(toList());
     }
-    public void updateUser(UserDTO user, final int id){
+    public void updateUser(final UserDTO user, final int id){
         userExists(id);
-        User u = userRepository.getReferenceById(id);
+        final User u = userRepository.getReferenceById(id);
         u.setFirstname(user.getFirstname());
         u.setLastname(user.getLastname());
         u.setPhone(user.getPhone());
@@ -58,7 +58,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public void userExists(int id)  {
+    public void userExists(final int id)  {
         if(!userRepository.existsById(id)){
             throw new EntityDoesNotExist("Exception: User was not found!");
         }

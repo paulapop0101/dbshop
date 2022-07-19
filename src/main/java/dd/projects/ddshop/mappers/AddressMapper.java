@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddressMapper {
 
-    public Address toAddress(AddressDTO a){
+    public Address toAddress(final AddressDTO a){
         return new Address(a.getStreetLine(),a.getPostalCode(),a.getCity(), a.getCounty(),a.getCountry());
     }
 }
+
+

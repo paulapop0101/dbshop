@@ -12,15 +12,15 @@ import static java.util.stream.Collectors.toList;
 
 @Component
 public class CategoryMapper {
-    public CategoryDTO toDTO(Category category){
-        List<SubcategoryDTO> str =  category.getSubcategories()
+    public CategoryDTO toDTO(final Category category){
+        final List<SubcategoryDTO> str =  category.getSubcategories()
                 .stream()
                 .map(CategoryMapper::toSubcategoryDTO)
                 .collect(toList());
         return new CategoryDTO(category.getId(), category.getName(),str);
     }
 
-    public static SubcategoryDTO toSubcategoryDTO(Subcategory subcategory){
+    public static SubcategoryDTO toSubcategoryDTO(final Subcategory subcategory){
         return new SubcategoryDTO(subcategory.getId(), subcategory.getName());
     }
 

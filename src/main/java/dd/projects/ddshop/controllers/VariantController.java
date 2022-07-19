@@ -18,7 +18,7 @@ public class VariantController {
     private final VariantService variantService;
 
     private final MessageSource messageSource = new AppConfiguration().messageSource();
-    public VariantController(VariantService variantService){
+    public VariantController(final VariantService variantService){
         this.variantService = variantService;
     }
 
@@ -28,12 +28,12 @@ public class VariantController {
     }
 
     @PostMapping("/addVariant")
-    public ResponseEntity<Object> addVariant(@RequestBody VariantCreateDTO variantCreateDTO){
+    public ResponseEntity<Object> addVariant(@RequestBody final VariantCreateDTO variantCreateDTO){
         variantService.addVariant(variantCreateDTO);
         return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH),HttpStatus.OK);
     }
     @PutMapping("/updateVariant")
-    public ResponseEntity<Object> updateVariant(@RequestBody Variant variant)  {
+    public ResponseEntity<Object> updateVariant(@RequestBody final Variant variant)  {
         variantService.variantExists(variant.getId());
         variantService.updateVariant(variant);
         return new ResponseEntity<>(messageSource.getMessage("api.response.update.successful", null, Locale.ENGLISH), HttpStatus.OK);

@@ -19,32 +19,32 @@ public class CategoryValidation {
 
     private final SubcategoryRepository subcategoryRepository;
 
-    public CategoryValidation(CategoryRepository categoryRepository, SubcategoryRepository subcategoryRepository) {
+    public CategoryValidation(final CategoryRepository categoryRepository, final SubcategoryRepository subcategoryRepository) {
         this.categoryRepository = categoryRepository;
         this.subcategoryRepository = subcategoryRepository;
     }
 
 
-    public void categoryValidation(String name){
+    public void categoryValidation(final String name){
         checkEmpty(name);
         checkExists(name);
     }
-    public void subcategoryValidation(String name){
+    public void subcategoryValidation(final String name){
         checkEmpty(name);
         checkSubcategoryExists(name);
     }
-    private void checkEmpty(String name) {
+    private void checkEmpty(final String name) {
         if(name.isEmpty())
             throw new IncorrectInput(Util.getMessage("api.error.empty.fields", null));
     }
 
-    private void checkExists(String name) {
-        for(Category c : categoryRepository.findAll())
+    private void checkExists(final String name) {
+        for(final Category c : categoryRepository.findAll())
             if(c.getName().equals(name))
                 throw new EntityAlreadyExists(Util.getMessage("api.error.category", null));
     }
-    private void checkSubcategoryExists(String name) {
-            for(Subcategory subcategory:subcategoryRepository.findAll())
+    private void checkSubcategoryExists(final String name) {
+            for(final Subcategory subcategory:subcategoryRepository.findAll())
                 if(subcategory.getName().equals(name))
                     throw new EntityAlreadyExists(Util.getMessage("api.error.subcategory", null));
     }

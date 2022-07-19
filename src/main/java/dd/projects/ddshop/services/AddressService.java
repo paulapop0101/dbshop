@@ -15,17 +15,17 @@ public class AddressService {
 
     private final AddressRepository addressRepository;
     @Autowired
-    public AddressService(AddressRepository addressRepository){
+    public AddressService(final AddressRepository addressRepository){
         this.addressRepository = addressRepository;
     }
-    public void addAddress(Address address){ addressRepository.save(address);}
+    public void addAddress(final Address address){ addressRepository.save(address);}
 
     public List<Address> getAllAddresses() {
         return  addressRepository.findAll();
     }
-    public void updateAddress(AddressDTO address, int id){
+    public void updateAddress(final AddressDTO address, final int id){
         addressExists(id);
-        Address a = addressRepository.getReferenceById(id);
+        final Address a = addressRepository.getReferenceById(id);
         a.setCity(address.getCity());
         a.setCountry(address.getCountry());
         a.setCounty(address.getCounty());
@@ -34,11 +34,11 @@ public class AddressService {
         addressRepository.save(a);
     }
 
-    public void deleteAddress(int id) {
+    public void deleteAddress(final int id) {
         addressRepository.deleteById(id);
     }
 
-    public void addressExists(int id) {
+    public void addressExists(final int id) {
         if(!addressRepository.existsById(id))
             throw new EntityDoesNotExist("Exception address does not exist");
 

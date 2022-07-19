@@ -18,11 +18,11 @@ public class UserValidation {
 
     private final UserRepository userRepository;
 
-    public UserValidation(UserRepository userRepository) {
+    public UserValidation(final UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public void userValidation(UserCreationDTO userCreationDTO){
+    public void userValidation(final UserCreationDTO userCreationDTO){
         checkEmpty(userCreationDTO);
         checkEmail(userCreationDTO);
         if(!userCreationDTO.getPassword().equals(userCreationDTO.getCheckPassword()))
@@ -31,22 +31,22 @@ public class UserValidation {
         checkPhone(userCreationDTO.getPhone());
     }
 
-    private void checkEmail(UserCreationDTO userCreationDTO) {
-        for(User user : userRepository.findAll())
+    private void checkEmail(final UserCreationDTO userCreationDTO) {
+        for(final User user : userRepository.findAll())
             if(user.getEmail().equals(userCreationDTO.getEmail()))
                 throw new EntityAlreadyExists(Util.getMessage("api.error.email", null));
     }
 
-    private void checkPhone(String phone) {
+    private void checkPhone(final String phone) {
         if(phone.length()!=10)
             throw new IncorrectInput(Util.getMessage("api.error.phone", null));
-        for(Character c : phone.toCharArray())
+        for(final Character c : phone.toCharArray())
             if(!Character.isDigit(c))
                 throw new IncorrectInput(Util.getMessage("api.error.phone", null));
 
     }
 
-    private void checkPassword(String password) {
+    private void checkPassword(final String password) {
         boolean uppercase=false;
         if(password.length()<8)
             throw new IncorrectInput(Util.getMessage("api.error.password", null));
@@ -60,7 +60,7 @@ public class UserValidation {
             throw new IncorrectInput(Util.getMessage("api.error.password", null));
     }
 
-    private void checkEmpty(UserCreationDTO userCreationDTO) {
+    private void checkEmpty(final UserCreationDTO userCreationDTO) {
         if(userCreationDTO.getFirstname().isEmpty() || userCreationDTO.getLastname().isEmpty() ||
                 userCreationDTO.getEmail().isEmpty() || userCreationDTO.getPhone().isEmpty() ||
                 userCreationDTO.getPassword().isEmpty() || userCreationDTO.getCheckPassword().isEmpty() ||
@@ -68,7 +68,7 @@ public class UserValidation {
             throw new IncorrectInput(Util.getMessage("api.error.empty.fields", null));
     }
 
-    private boolean checkEmptyAddress(AddressDTO addressDTO) {
+    private boolean checkEmptyAddress(final AddressDTO addressDTO) {
         return addressDTO.getCountry().isEmpty() || addressDTO.getCounty().isEmpty() || addressDTO.getCity().isEmpty() ||
                 addressDTO.getPostalCode().isEmpty() || addressDTO.getStreetLine().isEmpty();
     }

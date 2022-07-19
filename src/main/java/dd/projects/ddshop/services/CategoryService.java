@@ -23,23 +23,23 @@ public class CategoryService {
     private final CategoryMapper categoryMapper = new CategoryMapper();
     private final CategoryValidation categoryValidation;
 
-    public CategoryService(CategoryRepository categoryRepository, SubcategoryRepository subcategoryRepository) {
+    public CategoryService(final CategoryRepository categoryRepository, final SubcategoryRepository subcategoryRepository) {
         this.subcategoryRepository = subcategoryRepository;
         this.categoryRepository = categoryRepository;
         this.categoryValidation = new CategoryValidation(categoryRepository, subcategoryRepository);
     }
 
-    public void addCategory(String name){
+    public void addCategory(final String name){
         categoryValidation.categoryValidation(name);
-        Category category = new Category(name);
+        final Category category = new Category(name);
         categoryRepository.save(category);
 
     }
 
     public void addSubcategory(final String name, final int id){
         categoryValidation.subcategoryValidation(name);
-        Category category = categoryRepository.getReferenceById(id);
-        Subcategory subcategory = new Subcategory(name,category);
+        final Category category = categoryRepository.getReferenceById(id);
+        final Subcategory subcategory = new Subcategory(name,category);
         subcategoryRepository.save(subcategory);
     }
 

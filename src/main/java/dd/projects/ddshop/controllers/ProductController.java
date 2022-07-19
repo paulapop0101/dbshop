@@ -20,12 +20,12 @@ public class ProductController {
 
     private final MessageSource messageSource = new AppConfiguration().messageSource();
 
-    public ProductController(ProductService productService){
+    public ProductController(final ProductService productService){
         this.productService = productService;
     }
 
     @PostMapping("/addProduct")
-    public ResponseEntity<Object> addProduct(@RequestBody ProductDTO productDTO){
+    public ResponseEntity<Object> addProduct(@RequestBody final ProductDTO productDTO){
         productService.addProduct(productDTO);
         return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }

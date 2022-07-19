@@ -28,7 +28,7 @@ public class AttributeService {
     private final SubcategoryRepository subcategoryRepository;
     private final AttributeValidation attributeValidation;
 
-    public AttributeService(ProductAttributeRepository productAttributeRepository, AttributeValueRepository attributeValueRepository, AssignedValueRepository assignedValueRepository, SubcategoryRepository subcategoryRepository){
+    public AttributeService(final ProductAttributeRepository productAttributeRepository, final AttributeValueRepository attributeValueRepository, final AssignedValueRepository assignedValueRepository, final SubcategoryRepository subcategoryRepository){
         this.productAttributeRepository=productAttributeRepository;
         this.attributeValueRepository=attributeValueRepository;
         this.assignedValueRepository = assignedValueRepository;
@@ -38,15 +38,15 @@ public class AttributeService {
 
     private final AttributeMapper attributeMapper = new AttributeMapper();
 
-    public void addAttribute(AttributeCreateDTO attributeCreateDTO) {
+    public void addAttribute(final AttributeCreateDTO attributeCreateDTO) {
         attributeValidation.attributeValidation(attributeCreateDTO);
 
-        ProductAttribute attribute = attributeMapper.toAttribute(attributeCreateDTO);
-        for(String value : attributeCreateDTO.getValues()) {
+        final ProductAttribute attribute = attributeMapper.toAttribute(attributeCreateDTO);
+        for(final String value : attributeCreateDTO.getValues()) {
             attribute.getAttributeValues().add(new AttributeValue(value, attribute));
         }
 
-        for(int id: attributeCreateDTO.getSubcategories()){
+        for(final int id: attributeCreateDTO.getSubcategories()){
             attribute.getSubcategories().add(subcategoryRepository.getReferenceById(id));
         }
 
@@ -55,8 +55,8 @@ public class AttributeService {
     }
 
 
-    private void saveAssignedValues(ProductAttribute attribute) {
-        for(AttributeValue attributeValue : attribute.getAttributeValues())
+    private void saveAssignedValues(final ProductAttribute attribute) {
+        for(final AttributeValue attributeValue : attribute.getAttributeValues())
             assignedValueRepository.save(new AssignedValue(attribute,attributeValue));
     }
 
@@ -64,11 +64,11 @@ public class AttributeService {
         attributeValueRepository.deleteById(id);
 
     }
-    public void addAttributeValue(final int id, String value){
+    public void addAttributeValue(final int id, final String value){
         attributeValidation.checkAttributeValue(value,id);
 
-        ProductAttribute productAttribute = productAttributeRepository.getReferenceById(id);
-        AttributeValue attributeValue=new AttributeValue(value,productAttribute);
+        final ProductAttribute productAttribute = productAttributeRepository.getReferenceById(id);
+        final AttributeValue attributeValue=new AttributeValue(value,productAttribute);
         productAttribute.getAttributeValues().add(attributeValue);
         productAttributeRepository.save(productAttribute);
 
@@ -89,8 +89,8 @@ public class AttributeService {
                 .collect(toList());
     }
 
-    public void addSubcategoryToAttribute(SubcategoryDTO subcategoryDTO, final int id) {
-        ProductAttribute attribute = productAttributeRepository.getReferenceById(id);
+    public void addSubcategoryToAttribute(final SubcategoryDTO subcategoryDTO, final int id) {
+        final ProductAttribute attribute = productAttributeRepository.getReferenceById(id);
         attribute.getSubcategories().add(subcategoryRepository.getReferenceById(subcategoryDTO.getId()));
         productAttributeRepository.save(attribute);
     }

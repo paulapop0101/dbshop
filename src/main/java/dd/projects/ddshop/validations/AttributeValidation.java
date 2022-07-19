@@ -15,39 +15,39 @@ import java.util.Set;
 public class AttributeValidation {
     private final ProductAttributeRepository productAttributeRepository;
 
-    public AttributeValidation(ProductAttributeRepository productAttributeRepository) {
+    public AttributeValidation(final ProductAttributeRepository productAttributeRepository) {
         this.productAttributeRepository = productAttributeRepository;
     }
 
-    public void attributeValidation(AttributeCreateDTO attributeCreateDTO){
+    public void attributeValidation(final AttributeCreateDTO attributeCreateDTO){
         checkEmpty(attributeCreateDTO);
         attributeExists(attributeCreateDTO);
         checkDuplicates(attributeCreateDTO.getValues());
     }
-    private void checkEmpty(AttributeCreateDTO attributeCreateDTO) {
+    private void checkEmpty(final AttributeCreateDTO attributeCreateDTO) {
         if(attributeCreateDTO.getName().isEmpty()||attributeCreateDTO.getValues().isEmpty())
             throw new IncorrectInput(Util.getMessage("api.error.empty.fields", null));
     }
 
-    private void checkDuplicates(List<String> values) {
-        Set<String> set = new HashSet<>(values);
+    private void checkDuplicates(final List<String> values) {
+        final Set<String> set = new HashSet<>(values);
         if(set.size()!=values.size())
             throw new EntityAlreadyExists(Util.getMessage("api.error.duplicates", null));
     }
 
-    private void attributeExists(AttributeCreateDTO attributeCreateDTO) {
-        for(ProductAttribute attribute : productAttributeRepository.findAll())
+    private void attributeExists(final AttributeCreateDTO attributeCreateDTO) {
+        for(final ProductAttribute attribute : productAttributeRepository.findAll())
             if(attribute.getName().equals(attributeCreateDTO.getName()))
                 throw new EntityAlreadyExists(Util.getMessage("api.error.attribute.duplicate", null));
     }
-    public void checkAttributeValue(String value, int id){
+    public void checkAttributeValue(final String value, final int id){
         if(value.isEmpty())
             throw new IncorrectInput(Util.getMessage("api.error.empty.fields", null));
         if(getAttributeValue(productAttributeRepository.getReferenceById(id),value)!=null)
             throw  new EntityAlreadyExists(Util.getMessage("api.error.duplicate", null));
     }
-    public AttributeValue getAttributeValue(ProductAttribute productAttribute, String value){
-        for(AttributeValue attributeValue1 : productAttribute.getAttributeValues())
+    public AttributeValue getAttributeValue(final ProductAttribute productAttribute, final String value){
+        for(final AttributeValue attributeValue1 : productAttribute.getAttributeValues())
             if(attributeValue1.getValue().equals(value))
                 return attributeValue1;
 

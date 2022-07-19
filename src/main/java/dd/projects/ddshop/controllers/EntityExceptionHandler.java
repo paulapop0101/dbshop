@@ -15,18 +15,18 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class EntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {EntityDoesNotExist.class})
-    protected ResponseEntity<Object> entityDoesNotExist(RuntimeException runtimeException, WebRequest webRequest){
-        String bodyOfResponse = runtimeException.getMessage();
+    protected ResponseEntity<Object> entityDoesNotExist(final RuntimeException runtimeException, final WebRequest webRequest){
+        final String bodyOfResponse = runtimeException.getMessage();
         return handleExceptionInternal(runtimeException, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, webRequest);
     }
     @ExceptionHandler(value = {EntityAlreadyExists.class})
-    protected ResponseEntity<Object> entityAlreadyExists(RuntimeException runtimeException, WebRequest webRequest){
-        String bodyOfResponse = runtimeException.getMessage();
+    protected ResponseEntity<Object> entityAlreadyExists(final RuntimeException runtimeException, final WebRequest webRequest){
+        final String bodyOfResponse = runtimeException.getMessage();
         return handleExceptionInternal(runtimeException, bodyOfResponse, new HttpHeaders(), HttpStatus.ALREADY_REPORTED, webRequest);
     }
     @ExceptionHandler(value = {IncorrectInput.class})
-    protected ResponseEntity<Object> incorrectInput(RuntimeException runtimeException, WebRequest webRequest){
-        String bodyOfResponse = runtimeException.getMessage();
+    protected ResponseEntity<Object> incorrectInput(final RuntimeException runtimeException, final WebRequest webRequest){
+        final String bodyOfResponse = runtimeException.getMessage();
         return handleExceptionInternal(runtimeException, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
     }
 }

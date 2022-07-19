@@ -19,7 +19,7 @@ public class AddressController {
     private final AddressService addressService;
 
     private final MessageSource messageSource = new AppConfiguration().messageSource();
-    public AddressController(AddressService addressService){
+    public AddressController(final AddressService addressService){
         this.addressService = addressService;
     }
     @GetMapping("/getAllAddresses")
@@ -28,13 +28,13 @@ public class AddressController {
     }
 
     @PostMapping("/addAddress")
-    public ResponseEntity<Object> addAddress(@RequestBody Address address) {
+    public ResponseEntity<Object> addAddress(@RequestBody final Address address) {
         addressService.addAddress(address);
         return new ResponseEntity<>(Util.getMessage("api.response.creation.successful", null), HttpStatus.OK);
     }
 
     @PutMapping("/updateAddress/{id}")
-    public ResponseEntity<Object> updateAddress(@RequestBody AddressDTO address, @PathVariable final int id){
+    public ResponseEntity<Object> updateAddress(@RequestBody final AddressDTO address, @PathVariable final int id){
         addressService.updateAddress(address,id);
         return new ResponseEntity<>(messageSource.getMessage("api.response.update.successful", null, Locale.ENGLISH), HttpStatus.OK);
     }
