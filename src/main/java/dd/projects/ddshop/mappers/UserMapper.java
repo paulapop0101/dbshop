@@ -1,18 +1,26 @@
 package dd.projects.ddshop.mappers;
 
+import dd.projects.ddshop.dtos.AddressDTO;
 import dd.projects.ddshop.dtos.UserCreationDTO;
 import dd.projects.ddshop.dtos.UserDTO;
 import dd.projects.ddshop.models.Address;
 import dd.projects.ddshop.models.User;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
+import org.mapstruct.ReportingPolicy;
 
-@Component
-public class UserMapper {
-    public UserDTO toDTO(final User user){
-        return new UserDTO(user.getFirstname(),user.getLastname(),user.getPhone());
-    }
-    public User toUser(final UserCreationDTO userCreationDTO, final Address billing_a, final Address delivery_a){
 
-        return new User(userCreationDTO.getFirstname(), userCreationDTO.getLastname(),userCreationDTO.getEmail(), userCreationDTO.getPassword(), userCreationDTO.getPhone(),billing_a,delivery_a);
-    }
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface UserMapper {
+    UserDTO toDTO(User user);
+
+    @Mappings({
+            @Mapping(target = "default_delivery_address", expression = "java(dtoToModel(userCreationDTO.getDelivery_address()))"),
+            @Mapping(target = "default_billing_address", expression = "java(dtoToModel(userCreationDTO.getBilling_address()))")
+    })
+    User dtoToModel(final UserCreationDTO userCreationDTO);
+
+
+    Address dtoToModel(AddressDTO addressDTO);
 }

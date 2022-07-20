@@ -10,5 +10,6 @@ import java.util.List;
 public class AttributeCreateDTO {
     String name;
     List<String> values;
-    List<Integer> subcategories;
+    List<SubcategoryDTO> subcategories;
+
 }

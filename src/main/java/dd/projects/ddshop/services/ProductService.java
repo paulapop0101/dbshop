@@ -7,8 +7,10 @@ import dd.projects.ddshop.models.Product;
 import dd.projects.ddshop.repositories.ProductRepository;
 import dd.projects.ddshop.repositories.SubcategoryRepository;
 import dd.projects.ddshop.validations.ProductValidation;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -17,25 +19,25 @@ import static java.util.stream.Collectors.toList;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final SubcategoryRepository subcategoryRepository;
-    private final ProductMapper productMapper = new ProductMapper();
+
+    private final ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
 
     private final ProductValidation productValidation = new ProductValidation();
 
     public ProductService(final ProductRepository productRepository, final SubcategoryRepository subcategoryRepository){
         this.productRepository=productRepository;
-        this.subcategoryRepository = subcategoryRepository;
     }
 
     public void addProduct(final ProductDTO productDTO){
         productValidation.productValidation(productDTO);
-        final Product product = productMapper.toProduct(productDTO,subcategoryRepository.getReferenceById(productDTO.getSubcategory().getId()));
+        final Product product = productMapper.toModel(productDTO);
+        product.setVariants(new ArrayList<>());
         productRepository.save(product);
     }
     public List<seeProductDTO> getProducts(){
         return productRepository.findAll()
                 .stream()
-                .map(productMapper::toSeeProductDTO)
+                .map(productMapper::toDTO)
                 .collect(toList());
     }
 

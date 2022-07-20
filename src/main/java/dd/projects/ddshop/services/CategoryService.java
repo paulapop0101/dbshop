@@ -7,6 +7,7 @@ import dd.projects.ddshop.models.Subcategory;
 import dd.projects.ddshop.repositories.CategoryRepository;
 import dd.projects.ddshop.repositories.SubcategoryRepository;
 import dd.projects.ddshop.validations.CategoryValidation;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class CategoryService {
 
     private final SubcategoryRepository subcategoryRepository;
 
-    private final CategoryMapper categoryMapper = new CategoryMapper();
+    private final CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
     private final CategoryValidation categoryValidation;
 
     public CategoryService(final CategoryRepository categoryRepository, final SubcategoryRepository subcategoryRepository) {

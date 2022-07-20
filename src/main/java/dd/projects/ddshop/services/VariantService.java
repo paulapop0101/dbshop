@@ -5,10 +5,10 @@ import dd.projects.ddshop.dtos.VariantDTO;
 import dd.projects.ddshop.exceptions.EntityDoesNotExist;
 import dd.projects.ddshop.mappers.VariantMapper;
 import dd.projects.ddshop.models.Variant;
-import dd.projects.ddshop.repositories.AssignedValueRepository;
 import dd.projects.ddshop.repositories.ProductRepository;
 import dd.projects.ddshop.repositories.VariantRepository;
 import dd.projects.ddshop.validations.VariantValidation;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,27 +19,28 @@ public class VariantService {
 
 
     private final VariantRepository variantRepository;
-    private final VariantMapper variantMapper;
+
+    private final VariantMapper variantMapper = Mappers.getMapper(VariantMapper.class);
+
+    private final ProductRepository productRepository;
 
     private final VariantValidation variantValidation = new VariantValidation();
-    private final AssignedValueRepository assignedValueRepository;
-    public VariantService(final VariantRepository variantRepository, final ProductRepository productRepository, final AssignedValueRepository assignedValueRepository){
+    public VariantService(final VariantRepository variantRepository, final ProductRepository productRepository){
         this.variantRepository=variantRepository;
-        this.assignedValueRepository=assignedValueRepository;
-        this.variantMapper = new VariantMapper(productRepository);
+        this.productRepository = productRepository;
     }
 
     public void addVariant(final VariantCreateDTO variantCreateDTO){
         variantValidation.variantValidation(variantCreateDTO);
-        final Variant variant= variantMapper.toVariant(variantCreateDTO);
-        for(final int assignedValueDTO:variantCreateDTO.getAssignedValues())
-            variant.getAssignedValues().add(assignedValueRepository.getReferenceById(assignedValueDTO));
+
+        final Variant variant= variantMapper.toModel(variantCreateDTO);
+        variant.setProduct(productRepository.getReferenceById(variantCreateDTO.getProduct_id()));
         variantRepository.save(variant);
 
     }
 
     public List<VariantDTO> getAllVariants() {
-        return  variantRepository.findAll().stream().map(variantMapper::toVariantDTO).collect(Collectors.toList());
+        return  variantRepository.findAll().stream().map(variantMapper::toDTO).collect(Collectors.toList());
     }
     public void updateVariant(final Variant variant){
         variantRepository.save(variant);

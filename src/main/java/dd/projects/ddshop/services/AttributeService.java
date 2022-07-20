@@ -12,8 +12,10 @@ import dd.projects.ddshop.repositories.AttributeValueRepository;
 import dd.projects.ddshop.repositories.ProductAttributeRepository;
 import dd.projects.ddshop.repositories.SubcategoryRepository;
 import dd.projects.ddshop.validations.AttributeValidation;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -28,6 +30,8 @@ public class AttributeService {
     private final SubcategoryRepository subcategoryRepository;
     private final AttributeValidation attributeValidation;
 
+    private final AttributeMapper attributeMapper = Mappers.getMapper(AttributeMapper.class);
+
     public AttributeService(final ProductAttributeRepository productAttributeRepository, final AttributeValueRepository attributeValueRepository, final AssignedValueRepository assignedValueRepository, final SubcategoryRepository subcategoryRepository){
         this.productAttributeRepository=productAttributeRepository;
         this.attributeValueRepository=attributeValueRepository;
@@ -36,22 +40,24 @@ public class AttributeService {
         this.attributeValidation = new AttributeValidation(productAttributeRepository);
     }
 
-    private final AttributeMapper attributeMapper = new AttributeMapper();
 
     public void addAttribute(final AttributeCreateDTO attributeCreateDTO) {
         attributeValidation.attributeValidation(attributeCreateDTO);
 
-        final ProductAttribute attribute = attributeMapper.toAttribute(attributeCreateDTO);
-        for(final String value : attributeCreateDTO.getValues()) {
-            attribute.getAttributeValues().add(new AttributeValue(value, attribute));
-        }
+        final ProductAttribute attribute = attributeMapper.toModel(attributeCreateDTO);
 
-        for(final int id: attributeCreateDTO.getSubcategories()){
-            attribute.getSubcategories().add(subcategoryRepository.getReferenceById(id));
-        }
+        addValues(attribute,attributeCreateDTO.getValues());
 
         productAttributeRepository.save(attribute);
         saveAssignedValues(attribute); // save (attribute - value) combination
+    }
+
+    private void addValues(final ProductAttribute attribute, final List<String> values) {
+        final List<AttributeValue> attributeValues = new ArrayList<>();
+        for(final String value : values) {
+            attributeValues.add(new AttributeValue(value, attribute));
+        }
+        attribute.setAttributeValues(attributeValues);
     }
 
 
@@ -85,7 +91,7 @@ public class AttributeService {
 
         return productAttributeRepository.findAll()
                 .stream()
-                .map(attributeMapper::toAttributeDTO)
+                .map(attributeMapper::toDTO)
                 .collect(toList());
     }
 
