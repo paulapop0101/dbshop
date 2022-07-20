@@ -25,17 +25,16 @@ public class ProductController {
     }
 
     @PostMapping("/addProduct")
-    public ResponseEntity<Object> addProduct(@RequestBody final ProductDTO productDTO){
+    public ResponseEntity<ProductDTO> addProduct(@RequestBody final ProductDTO productDTO){
         productService.addProduct(productDTO);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
+        return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
     @GetMapping("/getProducts")
     public ResponseEntity<List<seeProductDTO>> getProducts(){
         return new ResponseEntity<>(productService.getProducts(),HttpStatus.OK);
     }
     @DeleteMapping("/deleteProduct/{id}")
-    public ResponseEntity<Object> deleteProduct(@PathVariable final int id){
-        productService.deleteProduct(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH), HttpStatus.OK);
+    public boolean deleteProduct(@PathVariable final int id){
+       return productService.deleteProduct(id);
     }
 }

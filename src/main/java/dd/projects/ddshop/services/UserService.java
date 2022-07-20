@@ -51,9 +51,10 @@ public class UserService {
         u.setPhone(user.getPhone());
         userRepository.save(u);
     }
-    public void deleteUser(final int id) {
+    public boolean deleteUser(final int id) {
         userExists(id);
         userRepository.deleteById(id);
+        return true;
     }
 
     public void userExists(final int id)  {

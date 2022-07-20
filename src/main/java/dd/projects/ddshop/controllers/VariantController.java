@@ -28,20 +28,19 @@ public class VariantController {
     }
 
     @PostMapping("/addVariant")
-    public ResponseEntity<Object> addVariant(@RequestBody final VariantCreateDTO variantCreateDTO){
+    public ResponseEntity<VariantCreateDTO> addVariant(@RequestBody final VariantCreateDTO variantCreateDTO){
         variantService.addVariant(variantCreateDTO);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH),HttpStatus.OK);
+        return new ResponseEntity<>(variantCreateDTO,HttpStatus.OK);
     }
-    @PutMapping("/updateVariant")
-    public ResponseEntity<Object> updateVariant(@RequestBody final Variant variant)  {
-        variantService.variantExists(variant.getId());
-        variantService.updateVariant(variant);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.update.successful", null, Locale.ENGLISH), HttpStatus.OK);
-    }
+//    @PutMapping("/updateVariant")
+//    public ResponseEntity<Object> updateVariant(@RequestBody final Variant variant)  {
+//        variantService.variantExists(variant.getId());
+//        variantService.updateVariant(variant);
+//        return new ResponseEntity<>(messageSource.getMessage("api.response.update.successful", null, Locale.ENGLISH), HttpStatus.OK);
+//    }
 
     @DeleteMapping("/deleteVariant/{id}")
-    public ResponseEntity<Object> deleteVariant(@PathVariable final int id)  {
-        variantService.deleteVariant(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH), HttpStatus.OK);
+    public boolean deleteVariant(@PathVariable final int id)  {
+        return variantService.deleteVariant(id);
     }
 }

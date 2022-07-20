@@ -66,8 +66,9 @@ public class AttributeService {
             assignedValueRepository.save(new AssignedValue(attribute,attributeValue));
     }
 
-    public void deleteAttributeValue(final int id){
+    public boolean deleteAttributeValue(final int id){
         attributeValueRepository.deleteById(id);
+        return true;
 
     }
     public void addAttributeValue(final int id, final String value){
@@ -82,8 +83,9 @@ public class AttributeService {
 
     }
 
-    public void deleteAttribute(final int id){
+    public boolean deleteAttribute(final int id){
         productAttributeRepository.deleteById(id);
+        return true;
     }
 
 

@@ -27,7 +27,7 @@ public class OrderService {
         this.addressRepository = addressRepository;
     }
 
-    public void createOrder(final OrderCreateDTO orderCreateDTO){
+    public OrderCreateDTO createOrder(final OrderCreateDTO orderCreateDTO){
         final User user = userRepository.getReferenceById(orderCreateDTO.getUser_id());
         final Cart cart = cartRepository.getReferenceById(orderCreateDTO.getCart_id());
         final Address address1 = addressRepository.getReferenceById(orderCreateDTO.getDelivery_address());
@@ -35,9 +35,11 @@ public class OrderService {
         final Orders orders = new Orders(user,cart,orderCreateDTO.getPayment(),address1,address2);
         ordersRepository.save(orders);
         cart.setStatus(1);
+        return orderCreateDTO;
     }
 
-    public void deleteOrder(final int id) {
+    public boolean deleteOrder(final int id) {
         ordersRepository.deleteById(id);
+        return true;
     }
 }

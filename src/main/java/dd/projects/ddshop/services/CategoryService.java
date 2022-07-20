@@ -44,8 +44,9 @@ public class CategoryService {
         subcategoryRepository.save(subcategory);
     }
 
-    public void deleteCategory(final int id){
+    public boolean deleteCategory(final int id){
         categoryRepository.deleteById(id);
+        return true;
     }
     public List<CategoryDTO> getCategories(){
         return categoryRepository.findAll()
@@ -54,8 +55,9 @@ public class CategoryService {
                 .collect(toList());
     }
 
-    public void deleteSubcategory(final int id){
+    public boolean deleteSubcategory(final int id){
         subcategoryRepository.deleteById(id);
+        return true;
     }
 
 }

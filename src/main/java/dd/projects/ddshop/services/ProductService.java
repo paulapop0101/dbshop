@@ -41,7 +41,8 @@ public class ProductService {
                 .collect(toList());
     }
 
-    public void deleteProduct(final int id){
+    public boolean deleteProduct(final int id){
         productRepository.deleteById(id);
+        return true;
     }
 }

@@ -27,7 +27,7 @@ public class CartService {
         this.variantRepository = variantRepository;
     }
 
-    public void addEntry(final CartEntryDTO cartEntryDTO, final int user_id) {
+    public CartEntryDTO addEntry(final CartEntryDTO cartEntryDTO, final int user_id) {
         Cart cart = cartExists(user_id);
         if (cart == null) {
             cart = new Cart(userRepository.getReferenceById(user_id));
@@ -49,6 +49,7 @@ public class CartService {
 
         }
         cartRepository.save(cart);
+        return cartEntryDTO;
     }
 
     private Cart_entry entryExists(final Cart cart, final int variant_id) {
@@ -65,14 +66,16 @@ public class CartService {
         return null;
     }
 
-    public void deleteCartEntry(final int id) {
+    public boolean deleteCartEntry(final int id) {
         final Cart_entry entry = cartEntryRepository.getReferenceById(id);
         final Cart cart = entry.getCart_id();
         cart.setTotal_price(cart.getTotal_price() - entry.getTotal_price_per_entity());
         cartEntryRepository.deleteById(id);
+        return true;
     }
 
-    public void deleteCart(final int id) {
+    public boolean deleteCart(final int id) {
         cartRepository.deleteById(id);
+        return true;
     }
 }

@@ -2,6 +2,7 @@ package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.AppConfiguration;
 import dd.projects.ddshop.dtos.CartEntryDTO;
+import dd.projects.ddshop.models.Cart_entry;
 import dd.projects.ddshop.services.CartService;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -14,26 +15,21 @@ import java.util.Locale;
 public class CartController {
     private final CartService cartService;
 
-    private final MessageSource messageSource = new AppConfiguration().messageSource();
-
     public CartController(final CartService cartService) {
         this.cartService = cartService;
     }
 
     @PostMapping("/addCartEntry/{id}")
-    public ResponseEntity<Object> addCartEntry(@RequestBody final CartEntryDTO cartEntryDTO, @PathVariable final int id){
-        cartService.addEntry(cartEntryDTO,id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH), HttpStatus.OK);
+    public ResponseEntity<CartEntryDTO> addCartEntry(@RequestBody final CartEntryDTO cartEntryDTO, @PathVariable final int id){
+        return new ResponseEntity<>(cartService.addEntry(cartEntryDTO,id), HttpStatus.OK);
     }
     @DeleteMapping("/deleteCartEntry/{id}")
-    public ResponseEntity<Object> deleteCartEntry(@PathVariable final int id){
-        cartService.deleteCartEntry(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH), HttpStatus.OK);
+    public boolean deleteCartEntry(@PathVariable final int id){
+        return cartService.deleteCartEntry(id);
     }
     @DeleteMapping("/deleteCart/{id}")
-    public ResponseEntity<Object> deleteCart(@PathVariable final int id){
-        cartService.deleteCart(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH), HttpStatus.OK);
+    public boolean deleteCart(@PathVariable final int id){
+        return cartService.deleteCart(id);
     }
 //    @DeleteMapping("/deleteOneCartEntry/{id}")
 //    public ResponseEntity<Object> deleteOneCartEntry(@PathVariable final int id){

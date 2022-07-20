@@ -28,24 +28,22 @@ public class CategoryController {
     }
 
     @PostMapping("/addCategory")
-    public ResponseEntity<Object> addCategory(@RequestParam(name= "name") final String name){
+    public ResponseEntity<String> addCategory(@RequestParam(name= "name") final String name){
         categoryService.addCategory(name);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH),HttpStatus.OK);
+        return new ResponseEntity<>(name,HttpStatus.OK);
     }
     @PostMapping("/addSubcategory/{id}")
-    public ResponseEntity<Object> addSubcategory(@RequestParam(name= "name") final String name, @PathVariable final int id){
+    public ResponseEntity<String> addSubcategory(@RequestParam(name= "name") final String name, @PathVariable final int id){
         categoryService.addSubcategory(name,id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.creation.successful", null, Locale.ENGLISH),HttpStatus.OK);
+        return new ResponseEntity<>(name,HttpStatus.OK);
     }
     @DeleteMapping("/deleteCategory/{id}")
-    public ResponseEntity<Object> deleteCategory(@PathVariable final int id){
-        categoryService.deleteCategory(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH),HttpStatus.OK);
+    public boolean deleteCategory(@PathVariable final int id){
+        return categoryService.deleteCategory(id);
     }
     @DeleteMapping("/deleteSubcategory/{id}")
-    public ResponseEntity<Object> deleteSubcategory(@PathVariable final int id){
-        categoryService.deleteSubcategory(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH),HttpStatus.OK);
+    public boolean deleteSubcategory(@PathVariable final int id){
+        return categoryService.deleteSubcategory(id);
     }
 
 }
