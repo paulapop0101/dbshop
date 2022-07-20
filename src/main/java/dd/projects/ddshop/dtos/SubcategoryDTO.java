@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SubcategoryDTO {
-    int id;
-    String name;
+    private int id;
+    private String name;
 }

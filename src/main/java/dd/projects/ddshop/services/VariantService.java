@@ -38,7 +38,6 @@ public class VariantService {
         variantRepository.save(variant);
 
     }
-
     public List<VariantDTO> getAllVariants() {
         return  variantRepository.findAll().stream().map(variantMapper::toDTO).collect(Collectors.toList());
     }

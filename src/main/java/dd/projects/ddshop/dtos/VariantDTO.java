@@ -8,9 +8,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class VariantDTO {
-    String name;
-    float price;
-    int quantity;
-    String added_date;
-    List<AssignedValueDTO> assignedValues;
+    private String name;
+    private float price;
+    private int quantity;
+    private String added_date;
+    private List<AssignedValueDTO> assignedValues;
 }

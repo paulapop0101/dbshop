@@ -52,6 +52,7 @@ public class CartService {
         return cartEntryDTO;
     }
 
+
     private Cart_entry entryExists(final Cart cart, final int variant_id) {
         for (final Cart_entry entry : cart.getCart_entries())
             if (entry.getVariant_id().getId() == variant_id)
