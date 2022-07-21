@@ -3,6 +3,7 @@ package dd.projects.ddshop.controllers;
 import dd.projects.ddshop.AppConfiguration;
 import dd.projects.ddshop.dtos.CategoryDTO;
 import dd.projects.ddshop.services.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    private final MessageSource messageSource = new AppConfiguration().messageSource();
-
+    @Autowired
     public CategoryController(final CategoryService categoryService){
         this.categoryService = categoryService;
     }
@@ -26,16 +26,13 @@ public class CategoryController {
     public ResponseEntity<List<CategoryDTO>> getCategories(){
         return new ResponseEntity<>(categoryService.getCategories(), HttpStatus.OK);
     }
-
     @PostMapping("/addCategory")
     public ResponseEntity<String> addCategory(@RequestParam(name= "name") final String name){
-        categoryService.addCategory(name);
-        return new ResponseEntity<>(name,HttpStatus.OK);
+        return new ResponseEntity<>(categoryService.addCategory(name),HttpStatus.OK);
     }
     @PostMapping("/addSubcategory/{id}")
     public ResponseEntity<String> addSubcategory(@RequestParam(name= "name") final String name, @PathVariable final int id){
-        categoryService.addSubcategory(name,id);
-        return new ResponseEntity<>(name,HttpStatus.OK);
+        return new ResponseEntity<>(categoryService.addSubcategory(name,id),HttpStatus.OK);
     }
     @DeleteMapping("/deleteCategory/{id}")
     public boolean deleteCategory(@PathVariable final int id){

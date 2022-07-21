@@ -9,6 +9,7 @@ import dd.projects.ddshop.repositories.ProductRepository;
 import dd.projects.ddshop.repositories.VariantRepository;
 import dd.projects.ddshop.validations.VariantValidation;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,17 +26,20 @@ public class VariantService {
     private final ProductRepository productRepository;
 
     private final VariantValidation variantValidation = new VariantValidation();
+
+    @Autowired
     public VariantService(final VariantRepository variantRepository, final ProductRepository productRepository){
         this.variantRepository=variantRepository;
         this.productRepository = productRepository;
     }
 
-    public void addVariant(final VariantCreateDTO variantCreateDTO){
+    public VariantCreateDTO addVariant(final VariantCreateDTO variantCreateDTO){
         variantValidation.variantValidation(variantCreateDTO);
 
         final Variant variant= variantMapper.toModel(variantCreateDTO);
         variant.setProduct(productRepository.getReferenceById(variantCreateDTO.getProduct_id()));
         variantRepository.save(variant);
+        return variantCreateDTO;
 
     }
     public List<VariantDTO> getAllVariants() {

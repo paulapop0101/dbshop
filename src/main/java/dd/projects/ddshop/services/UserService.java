@@ -9,6 +9,7 @@ import dd.projects.ddshop.repositories.UserRepository;
 import dd.projects.ddshop.utils.PasswordUtil;
 import dd.projects.ddshop.validations.UserValidation;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,16 +25,18 @@ public class UserService {
 
     private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
+    @Autowired
     public UserService(final UserRepository userRepository){
         this.userRepository = userRepository;
         this.userValidation = new UserValidation(userRepository);
     }
 
-    public void addUser(final UserCreationDTO user){
+    public UserCreationDTO addUser(final UserCreationDTO user){
         userValidation.userValidation(user);
         final User u= userMapper.dtoToModel(user);
         u.setPassword(PasswordUtil.getMd5(u.getPassword()));
         userRepository.save(u);
+        return user;
     }
 
 
@@ -43,13 +46,14 @@ public class UserService {
                 .map(userMapper::toDTO)
                 .collect(toList());
     }
-    public void updateUser(final UserDTO user, final int id){
+    public UserDTO updateUser(final UserDTO user, final int id){
         userExists(id);
         final User u = userRepository.getReferenceById(id);
         u.setFirstname(user.getFirstname());
         u.setLastname(user.getLastname());
         u.setPhone(user.getPhone());
         userRepository.save(u);
+        return user;
     }
     public boolean deleteUser(final int id) {
         userExists(id);

@@ -34,8 +34,9 @@ public class AddressService {
         addressRepository.save(a);
     }
 
-    public void deleteAddress(final int id) {
+    public boolean deleteAddress(final int id) {
         addressRepository.deleteById(id);
+        return true;
     }
 
     public void addressExists(final int id) {

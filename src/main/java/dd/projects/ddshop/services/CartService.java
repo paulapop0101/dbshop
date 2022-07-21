@@ -8,6 +8,7 @@ import dd.projects.ddshop.repositories.CartEntryRepository;
 import dd.projects.ddshop.repositories.CartRepository;
 import dd.projects.ddshop.repositories.UserRepository;
 import dd.projects.ddshop.repositories.VariantRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +21,7 @@ public class CartService {
 
     private final VariantRepository variantRepository;
 
+    @Autowired
     public CartService(final UserRepository userRepository, final CartRepository cartRepository, final CartEntryRepository cartEntryRepository, final VariantRepository variantRepository) {
         this.userRepository = userRepository;
         this.cartRepository = cartRepository;

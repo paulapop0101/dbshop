@@ -1,13 +1,10 @@
 package dd.projects.ddshop.validations;
 
-import dd.projects.ddshop.AppConfiguration;
 import dd.projects.ddshop.utils.Util;
 import dd.projects.ddshop.dtos.VariantCreateDTO;
 import dd.projects.ddshop.exceptions.IncorrectInput;
-import org.springframework.context.MessageSource;
 
 public class VariantValidation {
-    private final MessageSource messageSource = new AppConfiguration().messageSource();
     public void variantValidation(final VariantCreateDTO variantCreateDTO){
         checkEmpty(variantCreateDTO);
         if(!variantCreateDTO.getQuantity().matches("\\d+")||Integer.parseInt(variantCreateDTO.getQuantity())==0) {

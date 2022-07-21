@@ -8,6 +8,7 @@ import dd.projects.ddshop.repositories.ProductRepository;
 import dd.projects.ddshop.repositories.SubcategoryRepository;
 import dd.projects.ddshop.validations.ProductValidation;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,15 +25,17 @@ public class ProductService {
 
     private final ProductValidation productValidation = new ProductValidation();
 
+    @Autowired
     public ProductService(final ProductRepository productRepository, final SubcategoryRepository subcategoryRepository){
         this.productRepository=productRepository;
     }
 
-    public void addProduct(final ProductDTO productDTO){
+    public ProductDTO addProduct(final ProductDTO productDTO){
         productValidation.productValidation(productDTO);
         final Product product = productMapper.toModel(productDTO);
         product.setVariants(new ArrayList<>());
         productRepository.save(product);
+        return productDTO;
     }
     public List<seeProductDTO> getProducts(){
         return productRepository.findAll()

@@ -21,8 +21,6 @@ import java.util.Locale;
 public class AddressController {
 
     private final AddressService addressService;
-//UserMapperInImpl userMapperI = new UserMapperIImpl();
-    //UserMapperInImpl userMapperIn = new UserMapperInImpl();
     private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
     private final MessageSource messageSource = new AppConfiguration().messageSource();
     public AddressController(final AddressService addressService){
@@ -44,19 +42,19 @@ public class AddressController {
     @PostMapping("/addAddress")
     public ResponseEntity<Object> addAddress(@RequestBody final Address address) {
         addressService.addAddress(address);
-        return new ResponseEntity<>(Util.getMessage("api.response.creation.successful", null), HttpStatus.OK);
+        return new ResponseEntity<>(address, HttpStatus.OK);
     }
 
     @PutMapping("/updateAddress/{id}")
-    public ResponseEntity<Object> updateAddress(@RequestBody final AddressDTO address, @PathVariable final int id){
+    public ResponseEntity<AddressDTO> updateAddress(@RequestBody final AddressDTO address, @PathVariable final int id){
         addressService.updateAddress(address,id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.update.successful", null, Locale.ENGLISH), HttpStatus.OK);
+        return new ResponseEntity<>(address, HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteAddress/{id}")
-    public ResponseEntity<Object> deleteAddress(@PathVariable final int id)  {
-        addressService.deleteAddress(id);
-        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successfully", null, Locale.ENGLISH), HttpStatus.OK);
+    public boolean deleteAddress(@PathVariable final int id)  {
+
+        return  addressService.deleteAddress(id);
     }
 
 

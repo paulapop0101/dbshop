@@ -8,6 +8,7 @@ import dd.projects.ddshop.repositories.CategoryRepository;
 import dd.projects.ddshop.repositories.SubcategoryRepository;
 import dd.projects.ddshop.validations.CategoryValidation;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,24 +25,28 @@ public class CategoryService {
     private final CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
     private final CategoryValidation categoryValidation;
 
+    @Autowired
     public CategoryService(final CategoryRepository categoryRepository, final SubcategoryRepository subcategoryRepository) {
         this.subcategoryRepository = subcategoryRepository;
         this.categoryRepository = categoryRepository;
         this.categoryValidation = new CategoryValidation(categoryRepository, subcategoryRepository);
     }
 
-    public void addCategory(final String name){
+    public String addCategory(final String name){
         categoryValidation.categoryValidation(name);
         final Category category = new Category(name);
         categoryRepository.save(category);
+        return name;
 
     }
 
-    public void addSubcategory(final String name, final int id){
+    public String addSubcategory(final String name, final int id){
         categoryValidation.subcategoryValidation(name);
         final Category category = categoryRepository.getReferenceById(id);
         final Subcategory subcategory = new Subcategory(name,category);
         subcategoryRepository.save(subcategory);
+
+        return name;
     }
 
     public boolean deleteCategory(final int id){

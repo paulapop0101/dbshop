@@ -6,6 +6,7 @@ import dd.projects.ddshop.repositories.AddressRepository;
 import dd.projects.ddshop.repositories.CartRepository;
 import dd.projects.ddshop.repositories.OrdersRepository;
 import dd.projects.ddshop.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +21,7 @@ public class OrderService {
     private final AddressRepository addressRepository;
 
 
+    @Autowired
     public OrderService(final OrdersRepository ordersRepository, final UserRepository userRepository, final CartRepository cartRepository, final AddressRepository addressRepository) {
         this.ordersRepository = ordersRepository;
         this.userRepository = userRepository;

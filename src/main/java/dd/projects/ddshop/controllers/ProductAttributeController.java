@@ -5,6 +5,7 @@ import dd.projects.ddshop.dtos.AttributeCreateDTO;
 import dd.projects.ddshop.dtos.AttributeDTO;
 import dd.projects.ddshop.dtos.SubcategoryDTO;
 import dd.projects.ddshop.services.AttributeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,25 +18,22 @@ public class ProductAttributeController {
 
     private final AttributeService attributeService;
 
-
+    @Autowired
     public ProductAttributeController(final AttributeService attributeService){
         this.attributeService = attributeService;
     }
 
     @PostMapping("/addAttribute")
     public ResponseEntity<AttributeCreateDTO> addAttribute(@RequestBody final AttributeCreateDTO attributeCreateDTO) {
-        attributeService.addAttribute(attributeCreateDTO);
-        return new ResponseEntity<>(attributeCreateDTO, HttpStatus.OK);
+        return new ResponseEntity<>(attributeService.addAttribute(attributeCreateDTO), HttpStatus.OK);
     }
     @PostMapping("/addSubcategoryToAttribute/{id}")
     public ResponseEntity<SubcategoryDTO> addSubcategoryToAttribute(@RequestBody final SubcategoryDTO subcategoryDTO, @PathVariable final int id) {
-        attributeService.addSubcategoryToAttribute(subcategoryDTO,id);
-        return new ResponseEntity<>(subcategoryDTO, HttpStatus.OK);
+        return new ResponseEntity<>(attributeService.addSubcategoryToAttribute(subcategoryDTO,id), HttpStatus.OK);
     }
     @PostMapping("/addAttributeValue/{id}")
     public ResponseEntity<String> addAttributeValue(@RequestParam(name= "value") final String value, @PathVariable final int id) {
-        attributeService.addAttributeValue(id,value);
-        return new ResponseEntity<>(value, HttpStatus.OK);
+        return new ResponseEntity<>(attributeService.addAttributeValue(id,value), HttpStatus.OK);
     }
     @DeleteMapping("/deleteAttributeValue/{id}")
     public boolean deleteAttributeValue(@PathVariable final int id){

@@ -41,7 +41,7 @@ public class AttributeService {
     }
 
 
-    public void addAttribute(final AttributeCreateDTO attributeCreateDTO) {
+    public AttributeCreateDTO addAttribute(final AttributeCreateDTO attributeCreateDTO) {
         attributeValidation.attributeValidation(attributeCreateDTO);
 
         final ProductAttribute attribute = attributeMapper.toModel(attributeCreateDTO);
@@ -50,6 +50,8 @@ public class AttributeService {
 
         productAttributeRepository.save(attribute);
         saveAssignedValues(attribute); // save (attribute - value) combination
+
+        return attributeCreateDTO;
     }
 
     private void addValues(final ProductAttribute attribute, final List<String> values) {
@@ -71,7 +73,7 @@ public class AttributeService {
         return true;
 
     }
-    public void addAttributeValue(final int id, final String value){
+    public String addAttributeValue(final int id, final String value){
         attributeValidation.checkAttributeValue(value,id);
 
         final ProductAttribute productAttribute = productAttributeRepository.getReferenceById(id);
@@ -80,6 +82,8 @@ public class AttributeService {
         productAttributeRepository.save(productAttribute);
 
         assignedValueRepository.save(new AssignedValue(productAttribute,attributeValidation.getAttributeValue(productAttribute,value)));
+
+        return value;
 
     }
 
@@ -97,9 +101,11 @@ public class AttributeService {
                 .collect(toList());
     }
 
-    public void addSubcategoryToAttribute(final SubcategoryDTO subcategoryDTO, final int id) {
+    public SubcategoryDTO addSubcategoryToAttribute(final SubcategoryDTO subcategoryDTO, final int id) {
         final ProductAttribute attribute = productAttributeRepository.getReferenceById(id);
         attribute.getSubcategories().add(subcategoryRepository.getReferenceById(subcategoryDTO.getId()));
         productAttributeRepository.save(attribute);
+
+        return subcategoryDTO;
     }
 }

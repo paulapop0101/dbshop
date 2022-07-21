@@ -3,6 +3,7 @@ package dd.projects.ddshop.controllers;
 import dd.projects.ddshop.dtos.VariantCreateDTO;
 import dd.projects.ddshop.dtos.VariantDTO;
 import dd.projects.ddshop.services.VariantService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 public class VariantController {
     private final VariantService variantService;
 
+    @Autowired
     public VariantController(final VariantService variantService){
         this.variantService = variantService;
     }
@@ -24,8 +26,7 @@ public class VariantController {
 
     @PostMapping("/addVariant")
     public ResponseEntity<VariantCreateDTO> addVariant(@RequestBody final VariantCreateDTO variantCreateDTO){
-        variantService.addVariant(variantCreateDTO);
-        return new ResponseEntity<>(variantCreateDTO,HttpStatus.OK);
+        return new ResponseEntity<>(variantService.addVariant(variantCreateDTO),HttpStatus.OK);
     }
 /*
     @PutMapping("/updateVariant")

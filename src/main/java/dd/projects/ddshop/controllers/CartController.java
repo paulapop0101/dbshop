@@ -4,6 +4,7 @@ import dd.projects.ddshop.AppConfiguration;
 import dd.projects.ddshop.dtos.CartEntryDTO;
 import dd.projects.ddshop.models.Cart_entry;
 import dd.projects.ddshop.services.CartService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.Locale;
 public class CartController {
     private final CartService cartService;
 
+    @Autowired
     public CartController(final CartService cartService) {
         this.cartService = cartService;
     }
