@@ -23,11 +23,12 @@ public class ProductService {
 
     private final ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
 
-    private final ProductValidation productValidation = new ProductValidation();
+    private final ProductValidation productValidation;
 
     @Autowired
     public ProductService(final ProductRepository productRepository, final SubcategoryRepository subcategoryRepository){
         this.productRepository=productRepository;
+        productValidation = new ProductValidation(productRepository);
     }
 
     public ProductDTO addProduct(final ProductDTO productDTO){

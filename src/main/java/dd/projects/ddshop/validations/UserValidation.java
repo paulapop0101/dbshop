@@ -30,7 +30,7 @@ public class UserValidation {
     private void checkEmail(final UserCreationDTO userCreationDTO) {
         for(final User user : userRepository.findAll())
             if(user.getEmail().equals(userCreationDTO.getEmail()))
-                throw new EntityAlreadyExists(Util.getMessage("api.error.email", null));
+                throw new EntityAlreadyExists(Util.getMessage("api.error.duplicate", new Object[]{"Account","email"}));
     }
 
     private void checkPhone(final String phone) {

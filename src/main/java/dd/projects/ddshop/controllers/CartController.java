@@ -1,6 +1,7 @@
 package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.AppConfiguration;
+import dd.projects.ddshop.dtos.CartDTO;
 import dd.projects.ddshop.dtos.CartEntryDTO;
 import dd.projects.ddshop.models.Cart_entry;
 import dd.projects.ddshop.services.CartService;
@@ -38,5 +39,10 @@ public class CartController {
 //        cartService.deleteOneCartEntry(id);
 //        return new ResponseEntity<>(messageSource.getMessage("api.response.deleted.successful", null, Locale.ENGLISH), HttpStatus.OK);
 //    }
+
+    @GetMapping("/getUserCart/{id}")
+    public ResponseEntity<CartDTO> getUserCart( @PathVariable final int id) {
+        return new ResponseEntity<>(cartService.getUserCart(id),HttpStatus.OK);
+    }
 
 }

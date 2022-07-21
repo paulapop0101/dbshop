@@ -1,6 +1,8 @@
 package dd.projects.ddshop.services;
 
+import dd.projects.ddshop.dtos.CartDTO;
 import dd.projects.ddshop.dtos.CartEntryDTO;
+import dd.projects.ddshop.mappers.CartMapper;
 import dd.projects.ddshop.models.Cart;
 import dd.projects.ddshop.models.Cart_entry;
 import dd.projects.ddshop.models.Variant;
@@ -8,6 +10,7 @@ import dd.projects.ddshop.repositories.CartEntryRepository;
 import dd.projects.ddshop.repositories.CartRepository;
 import dd.projects.ddshop.repositories.UserRepository;
 import dd.projects.ddshop.repositories.VariantRepository;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,8 @@ public class CartService {
     private final CartEntryRepository cartEntryRepository;
 
     private final VariantRepository variantRepository;
+
+    private final CartMapper cartMapper = Mappers.getMapper(CartMapper.class);
 
     @Autowired
     public CartService(final UserRepository userRepository, final CartRepository cartRepository, final CartEntryRepository cartEntryRepository, final VariantRepository variantRepository) {
@@ -80,5 +85,10 @@ public class CartService {
     public boolean deleteCart(final int id) {
         cartRepository.deleteById(id);
         return true;
+    }
+
+    public CartDTO getUserCart(final int id) {
+        final Cart cart = cartExists(id);
+        return cartMapper.toDTO(cart);
     }
 }

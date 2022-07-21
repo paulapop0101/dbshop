@@ -8,6 +8,7 @@ import dd.projects.ddshop.models.AttributeValue;
 import dd.projects.ddshop.models.ProductAttribute;
 import dd.projects.ddshop.repositories.ProductAttributeRepository;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,13 +39,13 @@ public class AttributeValidation {
     private void attributeExists(final AttributeCreateDTO attributeCreateDTO) {
         for(final ProductAttribute attribute : productAttributeRepository.findAll())
             if(attribute.getName().equals(attributeCreateDTO.getName()))
-                throw new EntityAlreadyExists(Util.getMessage("api.error.attribute.duplicate", null));
+                throw new EntityAlreadyExists(Util.getMessage("api.error.duplicate", new Object[]{"Attribute","name"}));
     }
     public void checkAttributeValue(final String value, final int id){
         if(value.isEmpty())
             throw new IncorrectInput(Util.getMessage("api.error.empty.fields", null));
         if(getAttributeValue(productAttributeRepository.getReferenceById(id),value)!=null)
-            throw  new EntityAlreadyExists(Util.getMessage("api.error.duplicate", null));
+            throw  new EntityAlreadyExists(Util.getMessage("api.error.duplicate", new Object[]{"Value","name"}));
     }
     public AttributeValue getAttributeValue(final ProductAttribute productAttribute, final String value){
         for(final AttributeValue attributeValue1 : productAttribute.getAttributeValues())

@@ -5,6 +5,7 @@ import dd.projects.ddshop.dtos.VariantDTO;
 import dd.projects.ddshop.exceptions.EntityDoesNotExist;
 import dd.projects.ddshop.mappers.VariantMapper;
 import dd.projects.ddshop.models.Variant;
+import dd.projects.ddshop.repositories.AssignedValueRepository;
 import dd.projects.ddshop.repositories.ProductRepository;
 import dd.projects.ddshop.repositories.VariantRepository;
 import dd.projects.ddshop.validations.VariantValidation;
@@ -25,12 +26,14 @@ public class VariantService {
 
     private final ProductRepository productRepository;
 
-    private final VariantValidation variantValidation = new VariantValidation();
+    private final VariantValidation variantValidation;
+
 
     @Autowired
-    public VariantService(final VariantRepository variantRepository, final ProductRepository productRepository){
+    public VariantService(final VariantRepository variantRepository, final ProductRepository productRepository, final AssignedValueRepository assignedValueRepository){
         this.variantRepository=variantRepository;
         this.productRepository = productRepository;
+        this.variantValidation  = new VariantValidation(assignedValueRepository);
     }
 
     public VariantCreateDTO addVariant(final VariantCreateDTO variantCreateDTO){
@@ -42,6 +45,7 @@ public class VariantService {
         return variantCreateDTO;
 
     }
+
     public List<VariantDTO> getAllVariants() {
         return  variantRepository.findAll().stream().map(variantMapper::toDTO).collect(Collectors.toList());
     }

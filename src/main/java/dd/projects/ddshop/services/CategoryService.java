@@ -3,14 +3,17 @@ package dd.projects.ddshop.services;
 import dd.projects.ddshop.dtos.CategoryDTO;
 import dd.projects.ddshop.mappers.CategoryMapper;
 import dd.projects.ddshop.models.Category;
+import dd.projects.ddshop.models.ProductAttribute;
 import dd.projects.ddshop.models.Subcategory;
 import dd.projects.ddshop.repositories.CategoryRepository;
+import dd.projects.ddshop.repositories.ProductAttributeRepository;
 import dd.projects.ddshop.repositories.SubcategoryRepository;
 import dd.projects.ddshop.validations.CategoryValidation;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -26,7 +29,7 @@ public class CategoryService {
     private final CategoryValidation categoryValidation;
 
     @Autowired
-    public CategoryService(final CategoryRepository categoryRepository, final SubcategoryRepository subcategoryRepository) {
+    public CategoryService(final CategoryRepository categoryRepository, final SubcategoryRepository subcategoryRepository, final ProductAttributeRepository productAttributeRepository) {
         this.subcategoryRepository = subcategoryRepository;
         this.categoryRepository = categoryRepository;
         this.categoryValidation = new CategoryValidation(categoryRepository, subcategoryRepository);
@@ -61,7 +64,13 @@ public class CategoryService {
     }
 
     public boolean deleteSubcategory(final int id){
-        subcategoryRepository.deleteById(id);
+        final Subcategory subcategory = subcategoryRepository.getReferenceById(id);
+
+        for( final ProductAttribute attribute : subcategory.getProductAttributes()) {
+            attribute.getSubcategories().remove(subcategory);
+        }
+        subcategory.setProductAttributes(new ArrayList<>());
+        subcategoryRepository.deleteById(subcategory.getId());
         return true;
     }
 

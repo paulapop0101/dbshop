@@ -35,12 +35,12 @@ public class CategoryValidation {
     private void checkExists(final String name) {
         for(final Category c : categoryRepository.findAll())
             if(c.getName().equals(name))
-                throw new EntityAlreadyExists(Util.getMessage("api.error.category", null));
+                throw new EntityAlreadyExists(Util.getMessage("api.error.duplicate", new Object[]{"Category","name"}));
     }
     private void checkSubcategoryExists(final String name) {
             for(final Subcategory subcategory:subcategoryRepository.findAll())
                 if(subcategory.getName().equals(name))
-                    throw new EntityAlreadyExists(Util.getMessage("api.error.subcategory", null));
+                    throw new EntityAlreadyExists(Util.getMessage("api.error.duplicate", new Object[]{"Subcategory","name"}));
     }
 
 }
