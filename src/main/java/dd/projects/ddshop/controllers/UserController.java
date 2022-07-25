@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 @RestController
+@CrossOrigin
 public class UserController {
 
    private final UserService userService;
