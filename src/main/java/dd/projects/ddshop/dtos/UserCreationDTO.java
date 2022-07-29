@@ -24,7 +24,4 @@ public class UserCreationDTO {
 
     private String checkPassword;
 
-    private AddressDTO billing_address;
-
-    private AddressDTO delivery_address;
 }

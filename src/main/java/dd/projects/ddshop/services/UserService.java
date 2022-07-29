@@ -2,7 +2,9 @@ package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.dtos.UserCreationDTO;
 import dd.projects.ddshop.dtos.UserDTO;
+import dd.projects.ddshop.dtos.UserLoginDTO;
 import dd.projects.ddshop.exceptions.EntityDoesNotExist;
+import dd.projects.ddshop.exceptions.IncorrectInput;
 import dd.projects.ddshop.mappers.UserMapper;
 import dd.projects.ddshop.models.User;
 import dd.projects.ddshop.repositories.UserRepository;
@@ -65,5 +67,15 @@ public class UserService {
         if(!userRepository.existsById(id)){
             throw new EntityDoesNotExist("Exception: User was not found!");
         }
+    }
+
+    public UserLoginDTO logUser(final UserLoginDTO userDTO) {
+        final User user = userRepository.findByEmail(userDTO.getEmail());
+        if(user==null){
+            throw new IncorrectInput("An account with this email does not exist");
+        }
+        if(!user.getPassword().equals(PasswordUtil.getMd5(userDTO.getPassword())))
+            throw new IncorrectInput("Incorrect password");
+        return userDTO;
     }
 }

@@ -15,10 +15,7 @@ import org.mapstruct.ReportingPolicy;
 public interface UserMapper {
     UserDTO toDTO(User user);
 
-    @Mappings({
-            @Mapping(target = "default_delivery_address", expression = "java(dtoToModel(userCreationDTO.getDelivery_address()))"),
-            @Mapping(target = "default_billing_address", expression = "java(dtoToModel(userCreationDTO.getBilling_address()))")
-    })
+
     User dtoToModel(final UserCreationDTO userCreationDTO);
 
 

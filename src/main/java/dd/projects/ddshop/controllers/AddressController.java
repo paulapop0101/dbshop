@@ -32,10 +32,10 @@ public class AddressController {
     }
     @GetMapping("/Test")
     public ResponseEntity<String> Test() {
-        final AddressDTO a = new AddressDTO("s","s","city","s","s");
-        final UserCreationDTO u = new UserCreationDTO("s","s","s","s","s","s",a,a);
-        final User user = userMapper.dtoToModel(u);
-        System.out.println(user.getDefault_billing_address().getCity());
+//        final AddressDTO a = new AddressDTO("s","s","city","s","s");
+//        final UserCreationDTO u = new UserCreationDTO("s","s","s","s","s","s",a,a);
+//        final User user = userMapper.dtoToModel(u);
+//        System.out.println(user.getDefault_billing_address().getCity());
         return new ResponseEntity<>("here", HttpStatus.OK);
     }
 

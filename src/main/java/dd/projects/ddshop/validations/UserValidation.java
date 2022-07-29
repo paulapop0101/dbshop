@@ -19,12 +19,20 @@ public class UserValidation {
     }
 
     public void userValidation(final UserCreationDTO userCreationDTO){
+        checkNull(userCreationDTO);
         checkEmpty(userCreationDTO);
         checkEmail(userCreationDTO);
         if(!userCreationDTO.getPassword().equals(userCreationDTO.getCheckPassword()))
             throw new IncorrectInput(Util.getMessage("api.error.password.not.match", null));
         checkPassword(userCreationDTO.getPassword());
         checkPhone(userCreationDTO.getPhone());
+    }
+
+    private void checkNull(final UserCreationDTO userCreationDTO) {
+        if(userCreationDTO.getFirstname()==null || userCreationDTO.getLastname()==null ||
+                userCreationDTO.getEmail()==null || userCreationDTO.getPhone()==null ||
+                userCreationDTO.getPassword()==null || userCreationDTO.getCheckPassword()==null)
+            throw new IncorrectInput(Util.getMessage("api.error.empty.fields", null));
     }
 
     private void checkEmail(final UserCreationDTO userCreationDTO) {
@@ -59,8 +67,7 @@ public class UserValidation {
     private void checkEmpty(final UserCreationDTO userCreationDTO) {
         if(userCreationDTO.getFirstname().isEmpty() || userCreationDTO.getLastname().isEmpty() ||
                 userCreationDTO.getEmail().isEmpty() || userCreationDTO.getPhone().isEmpty() ||
-                userCreationDTO.getPassword().isEmpty() || userCreationDTO.getCheckPassword().isEmpty() ||
-                checkEmptyAddress(userCreationDTO.getBilling_address()) || checkEmptyAddress(userCreationDTO.getDelivery_address()))
+                userCreationDTO.getPassword().isEmpty() || userCreationDTO.getCheckPassword().isEmpty())
             throw new IncorrectInput(Util.getMessage("api.error.empty.fields", null));
     }
 

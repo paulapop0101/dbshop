@@ -13,6 +13,7 @@ import dd.projects.ddshop.repositories.ProductAttributeRepository;
 import dd.projects.ddshop.repositories.SubcategoryRepository;
 import dd.projects.ddshop.validations.AttributeValidation;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class AttributeService {
 
     private final AttributeMapper attributeMapper = Mappers.getMapper(AttributeMapper.class);
 
+    @Autowired
     public AttributeService(final ProductAttributeRepository productAttributeRepository, final AttributeValueRepository attributeValueRepository, final AssignedValueRepository assignedValueRepository, final SubcategoryRepository subcategoryRepository){
         this.productAttributeRepository=productAttributeRepository;
         this.attributeValueRepository=attributeValueRepository;
