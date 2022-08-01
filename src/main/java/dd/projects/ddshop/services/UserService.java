@@ -3,9 +3,11 @@ package dd.projects.ddshop.services;
 import dd.projects.ddshop.dtos.UserCreationDTO;
 import dd.projects.ddshop.dtos.UserDTO;
 import dd.projects.ddshop.dtos.UserLoginDTO;
+import dd.projects.ddshop.dtos.UserLoginRoleDTO;
 import dd.projects.ddshop.exceptions.EntityDoesNotExist;
 import dd.projects.ddshop.exceptions.IncorrectInput;
 import dd.projects.ddshop.mappers.UserMapper;
+import dd.projects.ddshop.models.Role;
 import dd.projects.ddshop.models.User;
 import dd.projects.ddshop.repositories.UserRepository;
 import dd.projects.ddshop.utils.PasswordUtil;
@@ -37,6 +39,7 @@ public class UserService {
         userValidation.userValidation(user);
         final User u= userMapper.dtoToModel(user);
         u.setPassword(PasswordUtil.getMd5(u.getPassword()));
+        u.setRole(Role.normal_user);
         userRepository.save(u);
         return user;
     }
@@ -69,13 +72,13 @@ public class UserService {
         }
     }
 
-    public UserLoginDTO logUser(final UserLoginDTO userDTO) {
+    public UserLoginRoleDTO logUser(final UserLoginDTO userDTO) {
         final User user = userRepository.findByEmail(userDTO.getEmail());
         if(user==null){
             throw new IncorrectInput("An account with this email does not exist");
         }
         if(!user.getPassword().equals(PasswordUtil.getMd5(userDTO.getPassword())))
             throw new IncorrectInput("Incorrect password");
-        return userDTO;
+        return new UserLoginRoleDTO(user.getId(),user.getFirstname(),user.getLastname(),user.getPhone(),user.getEmail(),user.getRole().name());
     }
 }

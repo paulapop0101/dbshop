@@ -4,6 +4,7 @@ import dd.projects.ddshop.AppConfiguration;
 import dd.projects.ddshop.dtos.UserCreationDTO;
 import dd.projects.ddshop.dtos.UserDTO;
 import dd.projects.ddshop.dtos.UserLoginDTO;
+import dd.projects.ddshop.dtos.UserLoginRoleDTO;
 import dd.projects.ddshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -39,7 +40,7 @@ public class UserController {
         return new ResponseEntity<>(userService.addUser(user),HttpStatus.OK);
     }
     @PostMapping("/logUser")
-    public ResponseEntity<UserLoginDTO> logUser(@RequestBody final UserLoginDTO user) {
+    public ResponseEntity<UserLoginRoleDTO> logUser(@RequestBody final UserLoginDTO user) {
         return new ResponseEntity<>(userService.logUser(user),HttpStatus.OK);
     }
     @DeleteMapping("/deleteUser/{id}")

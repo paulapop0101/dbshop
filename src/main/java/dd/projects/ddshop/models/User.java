@@ -28,6 +28,9 @@ public class User {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="default_delivery_address", referencedColumnName = "id" )
     private Address default_delivery_address;
